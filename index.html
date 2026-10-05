@@ -19,12 +19,16 @@
 </head>
 <body class="bg-slate-50 text-slate-800 flex h-screen overflow-hidden">
 
-    <!-- SIDEBAR NAVIGATION -->
-    <aside class="w-64 bg-slate-900 text-slate-300 hidden md:flex flex-col justify-between">
+    <!-- SIDEBAR NAVIGATION (Desktop & Mobile Drawer) -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-slate-900 text-slate-300 transform -translate-x-full md:translate-x-0 md:static transition-transform duration-200 ease-in-out flex flex-col justify-between">
         <div>
-            <div class="px-6 py-5 border-b border-slate-800">
-                <span class="text-xs uppercase tracking-wider text-emerald-400 font-semibold">Relawan dan Acara Operasional</span>
-                <h1 class="text-lg font-bold text-white mt-1">Baitulmal Tazkia</h1>
+            <div class="px-6 py-5 border-b border-slate-800 flex justify-between items-center">
+                <div>
+                    <span class="text-xs uppercase tracking-wider text-emerald-400 font-semibold">Kelompok 12 - Operasional</span>
+                    <h1 class="text-lg font-bold text-white mt-1">Baitulmal Tazkia</h1>
+                </div>
+                <!-- Tombol Close khusus HP -->
+                <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-white text-xl">✕</button>
             </div>
             <nav class="px-4 py-4 space-y-1">
                 <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center px-3 py-2.5 rounded-lg bg-emerald-600 text-white text-sm font-medium transition">📊 Dashboard Utama</button>
@@ -38,25 +42,34 @@
         </div>
     </aside>
 
+    <!-- OVERLAY GELAP SAAT SIDEBAR HP DIBUKA -->
+    <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/50 z-30 hidden md:hidden"></div>
+
     <!-- MAIN CONTENT AREA -->
-    <div class="flex-1 flex flex-col h-full overflow-y-auto">
+    <div class="flex-1 flex flex-col h-full overflow-y-auto w-full">
         
         <!-- TOPBAR -->
-        <header class="bg-white border-b border-slate-200 px-8 py-4 flex justify-between items-center shadow-xs">
-            <h2 id="page-title" class="text-xl font-semibold text-slate-800">Dashboard Operasional Kerelawanan</h2>
+        <header class="bg-white border-b border-slate-200 px-4 md:px-8 py-4 flex justify-between items-center shadow-xs">
             <div class="flex items-center space-x-3">
-                <span class="text-sm font-medium text-slate-600">Admin Operasional</span>
-                <div class="w-9 h-9 bg-emerald-700 text-white rounded-full flex items-center justify-center font-bold text-sm">AO</div>
+                <!-- Tombol Hamburger Menu khusus HP -->
+                <button onclick="toggleSidebar()" class="md:hidden text-slate-700 focus:outline-none text-xl p-1 rounded-lg hover:bg-slate-100">
+                    ☰
+                </button>
+                <h2 id="page-title" class="text-base md:text-xl font-semibold text-slate-800 truncate">Dashboard Operasional</h2>
+            </div>
+            <div class="flex items-center space-x-2 md:space-x-3">
+                <span class="text-xs md:text-sm font-medium text-slate-600 hidden sm:inline">Admin Operasional</span>
+                <div class="w-8 h-8 md:w-9 md:h-9 bg-emerald-700 text-white rounded-full flex items-center justify-center font-bold text-xs md:text-sm">AO</div>
             </div>
         </header>
 
         <!-- PAGE CONTENT -->
-        <main class="p-8 space-y-8 max-w-7xl mx-auto w-full">
+        <main class="p-4 md:p-8 space-y-8 max-w-7xl mx-auto w-full">
             
             <!-- VIEW 1: DASHBOARD UTAMA -->
             <div id="view-dashboard" class="space-y-8">
                 <!-- STATS CARDS -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
                     <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs flex items-center justify-between">
                         <div>
                             <p class="text-xs font-medium text-slate-500 uppercase">Total Relawan Aktif</p>
@@ -149,7 +162,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tabel-relawan-body" class="divide-y divide-slate-100 text-slate-700">
-                                        <!-- Data dinamis dari localStorage -->
+                                        <!-- Data dinamis -->
                                     </tbody>
                                 </table>
                             </div>
@@ -160,16 +173,16 @@
 
             <!-- VIEW 2: DATA RELAWAN (Database Lengkap) -->
             <div id="view-relawan" class="hidden bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
-                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-100 pb-3 gap-2">
                     <div>
                         <h3 class="text-lg font-bold text-slate-900">Database Seluruh Relawan Aktif</h3>
-                        <p class="text-sm text-slate-500">Kelola data personal relawan, NIK, kontak, serta durasi masa kontrak kerelawanan.</p>
+                        <p class="text-sm text-slate-500">Kelola data personal relawan, NIK, kontak, serta durasi masa kontrak.</p>
                     </div>
                     <span id="badge-total-db" class="bg-emerald-50 text-emerald-700 text-xs px-3 py-1.5 rounded-full font-semibold">Total: 0 Orang</span>
                 </div>
                 
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-sm">
+                    <table class="w-full text-left border-collapse text-sm min-w-[600px]">
                         <thead>
                             <tr class="border-b border-slate-200 text-slate-500 text-xs uppercase font-semibold">
                                 <th class="py-3 px-3">ID / NIK</th>
@@ -177,11 +190,11 @@
                                 <th class="py-3 px-3">Kontak & Alamat</th>
                                 <th class="py-3 px-3">Keahlian & Kontrak</th>
                                 <th class="py-3 px-3 text-center">Status</th>
-                                <th class="py-3 px-3 text-center">Aksi / Hapus</th>
+                                <th class="py-3 px-3 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="tabel-database-body" class="divide-y divide-slate-100 text-slate-700">
-                            <!-- Data dinamis dari localStorage -->
+                            <!-- Data dinamis -->
                         </tbody>
                     </table>
                 </div>
@@ -215,8 +228,8 @@
     </div>
 
     <!-- MODAL POP-UP NOTIFIKASI BERHASIL PENDAFTARAN -->
-    <div id="success-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center z-50">
-        <div class="bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full text-center space-y-5 animate-check">
+    <div id="success-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center z-50 p-4">
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl max-w-sm w-full text-center space-y-5 animate-check">
             <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl shadow-xs">
                 ✓
             </div>
@@ -231,7 +244,7 @@
     </div>
 
     <!-- MODAL POP-UP PILIHAN HAPUS RELAWAN -->
-    <div id="delete-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center z-50">
+    <div id="delete-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center z-50 p-4">
         <div class="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full space-y-4">
             <h3 class="text-base font-bold text-slate-900 border-b pb-2">Hapus / Nonaktifkan Relawan</h3>
             <p class="text-xs text-slate-500">Silakan pilih alasan penghapusan data relawan:</p>
@@ -262,7 +275,7 @@
     </div>
 
     <!-- MODAL POP-UP NOTIFIKASI BERHASIL HAPUS -->
-    <div id="deleted-success-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center z-50">
+    <div id="deleted-success-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center z-50 p-4">
         <div class="bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full text-center space-y-5 animate-check">
             <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl shadow-xs">
                 ✓
@@ -279,12 +292,19 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Ambil data dari localStorage browser (jika ada), jika kosong buat array kosong
         let dataRelawan = JSON.parse(localStorage.getItem('db_relawan')) || [];
 
         window.onload = function() {
             renderTabel();
         };
+
+        // Fungsi Buka/Tutup Sidebar di HP (Hamburger Menu)
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
 
         function switchTab(tab) {
             document.getElementById('view-dashboard').classList.add('hidden');
@@ -300,7 +320,7 @@
             if (tab === 'dashboard') {
                 document.getElementById('view-dashboard').classList.remove('hidden');
                 document.getElementById('nav-dashboard').className = "w-full flex items-center px-3 py-2.5 rounded-lg bg-emerald-600 text-white text-sm font-medium transition";
-                document.getElementById('page-title').innerText = "Dashboard Operasional Kerelawanan";
+                document.getElementById('page-title').innerText = "Dashboard Operasional";
             } else if (tab === 'relawan') {
                 document.getElementById('view-relawan').classList.remove('hidden');
                 document.getElementById('nav-relawan').className = "w-full flex items-center px-3 py-2.5 rounded-lg bg-emerald-600 text-white text-sm font-medium transition";
@@ -314,6 +334,11 @@
                 document.getElementById('view-presensi').classList.remove('hidden');
                 document.getElementById('nav-presensi').className = "w-full flex items-center px-3 py-2.5 rounded-lg bg-emerald-600 text-white text-sm font-medium transition";
                 document.getElementById('page-title').innerText = "Presensi & Jam Kerja Relawan";
+            }
+
+            // Tutup sidebar otomatis di HP setelah menu diklik
+            if (window.innerWidth < 768) {
+                toggleSidebar();
             }
         }
 
@@ -341,7 +366,7 @@
             tbodyDatabase.innerHTML = "";
             
             if (dataRelawan.length === 0) {
-                tbodyDatabase.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-xs text-slate-400">Database masih kosong. Silakan daftarkan relawan melalui form di Dashboard.</td></tr>`;
+                tbodyDatabase.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-xs text-slate-400">Database masih kosong. Silakan daftarkan relawan melalui form.</td></tr>`;
             } else {
                 dataRelawan.forEach(item => {
                     const row = document.createElement('tr');
@@ -390,7 +415,6 @@
 
             const idBaru = "REL-00" + (Math.floor(Math.random() * 900) + 100);
 
-            // Masukkan data baru ke array
             dataRelawan.push({
                 id: idBaru,
                 nik: nikInput,
@@ -403,7 +427,6 @@
                 kontrak: kontrakInput
             });
 
-            // SIMPAN PERMANEN KE LOCALSTORAGE BROWSER
             localStorage.setItem('db_relawan', JSON.stringify(dataRelawan));
 
             renderTabel();
@@ -428,10 +451,7 @@
             const idTarget = document.getElementById('delete-id-target').value;
             const alasanDipilih = document.querySelector('input[name="alasan-hapus"]:checked').value;
 
-            // Filter data untuk membuang relawan yang dihapus
             dataRelawan = dataRelawan.filter(item => item.id !== idTarget);
-
-            // UPDATE PERMANEN DI LOCALSTORAGE
             localStorage.setItem('db_relawan', JSON.stringify(dataRelawan));
 
             tutupModalHapus();
