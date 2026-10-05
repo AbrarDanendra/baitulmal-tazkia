@@ -292,7 +292,9 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // PASTE LINK GOOGLE APPS SCRIPT /EXEC KAMU DI SINI:
+        // -----------------------------------------------------------------
+        // PASANG LINK GOOGLE APPS SCRIPT /EXEC KAMU DI DALAM TANDA KUTIP DI BAWAH:
+        // -----------------------------------------------------------------
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwPgguhmI1VVtyNbQnyAk9tneZ5NMxa18XDolh-xzbHKu3O1S015sZjmBTgtFj_DUxkEg/exec";
 
         let dataRelawan = [];
@@ -491,12 +493,28 @@
             const idTarget = document.getElementById('delete-id-target').value;
             const alasanDipilih = document.querySelector('input[name="alasan-hapus"]:checked').value;
 
-            dataRelawan = dataRelawan.filter(item => item.id !== idTarget);
-            tutupModalHapus();
-            renderTabel();
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    action: 'delete',
+                    id: idTarget
+                })
+            })
+            .then(() => {
+                tutupModalHapus();
+                setTimeout(ambilDataDariSheet, 1500);
 
-            document.getElementById('deleted-reason-text').innerText = `Data dihapus dengan alasan: ${alasanDipilih}`;
-            document.getElementById('deleted-success-modal').classList.remove('hidden');
+                document.getElementById('deleted-reason-text').innerText = `Data dihapus dengan alasan: ${alasanDipilih}`;
+                document.getElementById('deleted-success-modal').classList.remove('hidden');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Gagal menghapus data dari server online.');
+            });
         }
 
         function tutupModalDeletedSuccess() {
