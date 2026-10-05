@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Relawan & Acara - Baitulmal Tazkia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        @keyframes scaleUp {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-check {
+            animation: scaleUp 0.3s ease-in-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 flex h-screen overflow-hidden">
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="w-64 bg-slate-900 text-slate-300 hidden md:flex flex-col justify-between">
+        <div>
+            <div class="px-6 py-5 border-b border-slate-800">
+                <span class="text-xs uppercase tracking-wider text-emerald-400 font-semibold">Kelompok 12 - Operasional</span>
+                <h1 class="text-lg font-bold text-white mt-1">Baitulmal Tazkia</h1>
+            </div>
+            <nav class="px-4 py-4 space-y-1">
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center px-3 py-2.5 rounded-lg bg-emerald-600 text-white text-sm font-medium transition">📊 Dashboard Utama</button>
+                <button onclick="switchTab('relawan')" id="nav-relawan" class="w-full flex items-center px-3 py-2.5 rounded-lg hover:bg-slate-800 text-sm font-medium transition">👥 Data Relawan</button>
+                <button onclick="switchTab('acara')" id="nav-acara" class="w-full flex items-center px-3 py-2.5 rounded-lg hover:bg-slate-800 text-sm font-medium transition">🗓️ Jadwal & Acara</button>
+                <button onclick="switchTab('presensi')" id="nav-presensi" class="w-full flex items-center px-3 py-2.5 rounded-lg hover:bg-slate-800 text-sm font-medium transition">📝 Presensi & Jam Kerja</button>
+            </nav>
+        </div>
+        <div class="px-6 py-4 border-t border-slate-800 text-xs text-slate-500">
+            Progress Proyek: <strong>50% (Fase Konstruksi)</strong>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="flex-1 flex flex-col h-full overflow-y-auto">
+        
+        <!-- TOPBAR -->
+        <header class="bg-white border-b border-slate-200 px-8 py-4 flex justify-between items-center shadow-xs">
+            <h2 id="page-title" class="text-xl font-semibold text-slate-800">Dashboard Operasional Kerelawanan</h2>
+            <div class="flex items-center space-x-3">
+                <span class="text-sm font-medium text-slate-600">Admin Operasional</span>
+                <div class="w-9 h-9 bg-emerald-700 text-white rounded-full flex items-center justify-center font-bold text-sm">AO</div>
+            </div>
+        </header>
+
+        <!-- PAGE CONTENT -->
+        <main class="p-8 space-y-8 max-w-7xl mx-auto w-full">
+            
+            <!-- VIEW 1: DASHBOARD UTAMA -->
+            <div id="view-dashboard" class="space-y-8">
+                <!-- STATS CARDS -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-slate-500 uppercase">Total Relawan Aktif</p>
+                            <h3 id="stat-total-relawan" class="text-2xl font-bold text-slate-900 mt-1">0</h3>
+                        </div>
+                        <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center text-xl">👥</div>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-slate-500 uppercase">Acara Bulan Ini</p>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1">5</h3>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-xl">📅</div>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-xs flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-medium text-slate-500 uppercase">Akumulasi Jam Kerja</p>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1">1,450 Jam</h3>
+                        </div>
+                        <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center text-xl">⏱</div>
+                    </div>
+                </div>
+
+                <!-- GRID SECTION: FORM & TABLE -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- FORM INPUT LENGKAP + KONTRAK -->
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-xs">
+                        <h3 class="text-base font-semibold text-slate-900 mb-4 pb-2 border-b border-slate-100">Registrasi Relawan Baru</h3>
+                        <form id="form-relawan" class="space-y-3.5" onsubmit="tambahRelawan(event)">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Nama Lengkap</label>
+                                <input type="text" id="input-nama" required placeholder="Masukkan nama lengkap" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-600 focus:bg-white transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">NIK KTP</label>
+                                <input type="text" id="input-nik" required maxlength="16" placeholder="16 digit NIK" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-600 focus:bg-white transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">No. Telepon / WhatsApp</label>
+                                <input type="text" id="input-telp" required placeholder="Contoh: 081234567890" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-600 focus:bg-white transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Tempat, Tanggal Lahir (TTL)</label>
+                                <input type="text" id="input-ttl" required placeholder="Contoh: Bogor, 12 Agustus 2002" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-600 focus:bg-white transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Alamat Domisili</label>
+                                <textarea id="input-alamat" required rows="2" placeholder="Masukkan alamat lengkap" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-600 focus:bg-white transition"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Keahlian Utama</label>
+                                <select id="input-keahlian" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-600 focus:bg-white transition">
+                                    <option>Dokumentasi & Media</option>
+                                    <option>Logistik Lapangan</option>
+                                    <option>Penggalangan Dana (Booth)</option>
+                                    <option>Edukasi & Fasilitator</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Ketersediaan Waktu</label>
+                                <input type="text" id="input-waktu" required placeholder="Contoh: Weekend / Sabtu-Minggu" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-600 focus:bg-white transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Rentang Waktu Kontrak</label>
+                                <select id="input-kontrak" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-emerald-600 focus:bg-white transition">
+                                    <option value="1 Bulan">1 Bulan</option>
+                                    <option value="3 Bulan">3 Bulan</option>
+                                    <option value="6 Bulan">6 Bulan</option>
+                                    <option value="12 Bulan">12 Bulan (1 Tahun)</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="w-full bg-emerald-600 text-white font-medium py-2.5 rounded-lg text-sm hover:bg-emerald-700 transition shadow-xs mt-2">Simpan Data Relawan</button>
+                        </form>
+                    </div>
+
+                    <!-- TABEL DATA DI DASHBOARD -->
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-xs lg:col-span-2 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-100">
+                                <h3 class="text-base font-semibold text-slate-900">Daftar Relawan Terbaru</h3>
+                                <span class="text-xs text-emerald-600 font-medium bg-emerald-50 px-2.5 py-1 rounded-full">Sinkronisasi Aktif</span>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse text-sm">
+                                    <thead>
+                                        <tr class="border-b border-slate-200 text-slate-500 text-xs uppercase font-semibold">
+                                            <th class="py-3 px-3">Nama Relawan</th>
+                                            <th class="py-3 px-3">Keahlian</th>
+                                            <th class="py-3 px-3">Kontrak</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabel-relawan-body" class="divide-y divide-slate-100 text-slate-700">
+                                        <!-- Data dinamis dari localStorage -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: DATA RELAWAN (Database Lengkap) -->
+            <div id="view-relawan" class="hidden bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">Database Seluruh Relawan Aktif</h3>
+                        <p class="text-sm text-slate-500">Kelola data personal relawan, NIK, kontak, serta durasi masa kontrak kerelawanan.</p>
+                    </div>
+                    <span id="badge-total-db" class="bg-emerald-50 text-emerald-700 text-xs px-3 py-1.5 rounded-full font-semibold">Total: 0 Orang</span>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-200 text-slate-500 text-xs uppercase font-semibold">
+                                <th class="py-3 px-3">ID / NIK</th>
+                                <th class="py-3 px-3">Nama & TTL</th>
+                                <th class="py-3 px-3">Kontak & Alamat</th>
+                                <th class="py-3 px-3">Keahlian & Kontrak</th>
+                                <th class="py-3 px-3 text-center">Status</th>
+                                <th class="py-3 px-3 text-center">Aksi / Hapus</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabel-database-body" class="divide-y divide-slate-100 text-slate-700">
+                            <!-- Data dinamis dari localStorage -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VIEW 3: JADWAL & ACARA -->
+            <div id="view-acara" class="hidden bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
+                <h3 class="text-lg font-bold text-slate-900">Manajemen Jadwal & Operasional Acara</h3>
+                <p class="text-sm text-slate-500">Daftar agenda kegiatan sosial dan penugasan relawan per sesi.</p>
+                <div class="space-y-3">
+                    <div class="border p-4 rounded-lg flex justify-between items-center">
+                        <div>
+                            <h4 class="font-bold text-sm">Santunan Yatim & Dhuafa Sentul</h4>
+                            <p class="text-xs text-slate-500">10 Okt 2026 | Sesi 1 (08:00 - 12:00)</p>
+                        </div>
+                        <span class="bg-blue-50 text-blue-700 text-xs px-2.5 py-1 rounded font-medium">Butuh 6 Relawan</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 4: PRESENSI & JAM KERJA -->
+            <div id="view-presensi" class="hidden bg-white p-6 rounded-xl border border-slate-200 shadow-xs space-y-4">
+                <h3 class="text-lg font-bold text-slate-900">Presensi & Rekapitulasi Jam Kerelawanan</h3>
+                <p class="text-sm text-slate-500">Pencatatan kehadiran relawan di lokasi acara untuk dasar penghargaan.</p>
+                <div class="border rounded-lg p-4 bg-emerald-50 text-emerald-800 text-sm">
+                    Modul absensi aktif. Total jam kerja terekam otomatis dari kehadiran riil di acara.
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- MODAL POP-UP NOTIFIKASI BERHASIL PENDAFTARAN -->
+    <div id="success-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full text-center space-y-5 animate-check">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl shadow-xs">
+                ✓
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-slate-900">Berhasil Mendaftar Menjadi Relawan Baru</h3>
+                <p class="text-xs text-slate-500 mt-1">Data identitas & durasi kontrak relawan tersimpan aman di sistem.</p>
+            </div>
+            <button onclick="tutupModal()" class="w-full bg-emerald-600 text-white font-medium py-2.5 rounded-xl text-sm hover:bg-emerald-700 transition shadow-sm">
+                Lanjut
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL POP-UP PILIHAN HAPUS RELAWAN -->
+    <div id="delete-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full space-y-4">
+            <h3 class="text-base font-bold text-slate-900 border-b pb-2">Hapus / Nonaktifkan Relawan</h3>
+            <p class="text-xs text-slate-500">Silakan pilih alasan penghapusan data relawan:</p>
+            <input type="hidden" id="delete-id-target">
+            <div class="space-y-2 text-sm">
+                <label class="flex items-center space-x-2 p-2 border rounded-lg cursor-pointer hover:bg-slate-50">
+                    <input type="radio" name="alasan-hapus" value="Mengundurkan Diri" checked class="text-emerald-600">
+                    <span>Mengundurkan Diri</span>
+                </label>
+                <label class="flex items-center space-x-2 p-2 border rounded-lg cursor-pointer hover:bg-slate-50">
+                    <input type="radio" name="alasan-hapus" value="Masa Kerelawanan Selesai" class="text-emerald-600">
+                    <span>Masa Kerelawanan Selesai</span>
+                </label>
+                <label class="flex items-center space-x-2 p-2 border rounded-lg cursor-pointer hover:bg-slate-50">
+                    <input type="radio" name="alasan-hapus" value="Tidak Aktif / Kontak Terputus" class="text-emerald-600">
+                    <span>Tidak Aktif / Kontak Terputus</span>
+                </label>
+                <label class="flex items-center space-x-2 p-2 border rounded-lg cursor-pointer hover:bg-slate-50">
+                    <input type="radio" name="alasan-hapus" value="Lainnya" class="text-emerald-600">
+                    <span>Lainnya</span>
+                </label>
+            </div>
+            <div class="flex space-x-2 pt-2">
+                <button onclick="tutupModalHapus()" class="w-1/2 bg-slate-100 text-slate-700 font-medium py-2 rounded-xl text-xs hover:bg-slate-200 transition">Batal</button>
+                <button onclick="prosesHapus()" class="w-1/2 bg-rose-600 text-white font-medium py-2 rounded-xl text-xs hover:bg-rose-700 transition">Konfirmasi Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL POP-UP NOTIFIKASI BERHASIL HAPUS -->
+    <div id="deleted-success-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full text-center space-y-5 animate-check">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl shadow-xs">
+                ✓
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-slate-900">Data Relawan Berhasil Dihapus</h3>
+                <p id="deleted-reason-text" class="text-xs text-slate-500 mt-1">Status relawan telah diperbarui di sistem.</p>
+            </div>
+            <button onclick="tutupModalDeletedSuccess()" class="w-full bg-emerald-600 text-white font-medium py-2.5 rounded-xl text-sm hover:bg-emerald-700 transition shadow-sm">
+                Lanjut
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Ambil data dari localStorage browser (jika ada), jika kosong buat array kosong
+        let dataRelawan = JSON.parse(localStorage.getItem('db_relawan')) || [];
+
+        window.onload = function() {
+            renderTabel();
+        };
+
+        function switchTab(tab) {
+            document.getElementById('view-dashboard').classList.add('hidden');
+            document.getElementById('view-relawan').classList.add('hidden');
+            document.getElementById('view-acara').classList.add('hidden');
+            document.getElementById('view-presensi').classList.add('hidden');
+
+            document.getElementById('nav-dashboard').className = "w-full flex items-center px-3 py-2.5 rounded-lg hover:bg-slate-800 text-sm font-medium transition";
+            document.getElementById('nav-relawan').className = "w-full flex items-center px-3 py-2.5 rounded-lg hover:bg-slate-800 text-sm font-medium transition";
+            document.getElementById('nav-acara').className = "w-full flex items-center px-3 py-2.5 rounded-lg hover:bg-slate-800 text-sm font-medium transition";
+            document.getElementById('nav-presensi').className = "w-full flex items-center px-3 py-2.5 rounded-lg hover:bg-slate-800 text-sm font-medium transition";
+
+            if (tab === 'dashboard') {
+                document.getElementById('view-dashboard').classList.remove('hidden');
+                document.getElementById('nav-dashboard').className = "w-full flex items-center px-3 py-2.5 rounded-lg bg-emerald-600 text-white text-sm font-medium transition";
+                document.getElementById('page-title').innerText = "Dashboard Operasional Kerelawanan";
+            } else if (tab === 'relawan') {
+                document.getElementById('view-relawan').classList.remove('hidden');
+                document.getElementById('nav-relawan').className = "w-full flex items-center px-3 py-2.5 rounded-lg bg-emerald-600 text-white text-sm font-medium transition";
+                document.getElementById('page-title').innerText = "Manajemen Data Relawan";
+                renderTabel();
+            } else if (tab === 'acara') {
+                document.getElementById('view-acara').classList.remove('hidden');
+                document.getElementById('nav-acara').className = "w-full flex items-center px-3 py-2.5 rounded-lg bg-emerald-600 text-white text-sm font-medium transition";
+                document.getElementById('page-title').innerText = "Jadwal & Operasional Acara";
+            } else if (tab === 'presensi') {
+                document.getElementById('view-presensi').classList.remove('hidden');
+                document.getElementById('nav-presensi').className = "w-full flex items-center px-3 py-2.5 rounded-lg bg-emerald-600 text-white text-sm font-medium transition";
+                document.getElementById('page-title').innerText = "Presensi & Jam Kerja Relawan";
+            }
+        }
+
+        function renderTabel() {
+            const tbodyDashboard = document.getElementById('tabel-relawan-body');
+            tbodyDashboard.innerHTML = "";
+            
+            if (dataRelawan.length === 0) {
+                tbodyDashboard.innerHTML = `<tr><td colspan="3" class="py-4 text-center text-xs text-slate-400">Belum ada relawan terdaftar.</td></tr>`;
+            } else {
+                const dataTerbaru = [...dataRelawan].reverse();
+                dataTerbaru.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.className = "hover:bg-slate-50 transition";
+                    row.innerHTML = `
+                        <td class="py-3 px-3 font-medium">${item.nama}</td>
+                        <td class="py-3 px-3 text-xs text-slate-500">${item.keahlian}</td>
+                        <td class="py-3 px-3 text-xs"><span class="bg-blue-50 text-blue-700 px-2 py-0.5 rounded font-medium">${item.kontrak}</span></td>
+                    `;
+                    tbodyDashboard.appendChild(row);
+                });
+            }
+
+            const tbodyDatabase = document.getElementById('tabel-database-body');
+            tbodyDatabase.innerHTML = "";
+            
+            if (dataRelawan.length === 0) {
+                tbodyDatabase.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-xs text-slate-400">Database masih kosong. Silakan daftarkan relawan melalui form di Dashboard.</td></tr>`;
+            } else {
+                dataRelawan.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.className = "hover:bg-slate-50 transition";
+                    row.innerHTML = `
+                        <td class="py-3 px-3">
+                            <span class="font-mono text-xs font-semibold text-slate-700">${item.id}</span><br>
+                            <span class="font-mono text-xs text-slate-400">NIK: ${item.nik}</span>
+                        </td>
+                        <td class="py-3 px-3">
+                            <span class="font-medium">${item.nama}</span><br>
+                            <span class="text-xs text-slate-500">TTL: ${item.ttl}</span>
+                        </td>
+                        <td class="py-3 px-3 text-xs text-slate-600">
+                            📞 ${item.telp}<br>
+                            📍 ${item.alamat}
+                        </td>
+                        <td class="py-3 px-3 text-xs text-slate-500">
+                            <span class="font-medium text-slate-700">${item.keahlian}</span><br>
+                            Kontrak: <span class="text-emerald-700 font-semibold">${item.kontrak}</span>
+                        </td>
+                        <td class="py-3 px-3 text-center"><span class="bg-emerald-50 text-emerald-700 text-xs px-2.5 py-0.5 rounded-full font-medium">Aktif</span></td>
+                        <td class="py-3 px-3 text-center">
+                            <button onclick="bukaModalHapus('${item.id}')" class="bg-rose-50 text-rose-600 hover:bg-rose-100 px-3 py-1 rounded-md text-xs font-medium transition">Hapus</button>
+                        </td>
+                    `;
+                    tbodyDatabase.appendChild(row);
+                });
+            }
+
+            document.getElementById('stat-total-relawan').innerText = dataRelawan.length;
+            document.getElementById('badge-total-db').innerText = `Total: ${dataRelawan.length} Orang`;
+        }
+
+        function tambahRelawan(event) {
+            event.preventDefault();
+            
+            const namaInput = document.getElementById('input-nama').value;
+            const nikInput = document.getElementById('input-nik').value;
+            const telpInput = document.getElementById('input-telp').value;
+            const ttlInput = document.getElementById('input-ttl').value;
+            const alamatInput = document.getElementById('input-alamat').value;
+            const keahlianInput = document.getElementById('input-keahlian').value;
+            const waktuInput = document.getElementById('input-waktu').value;
+            const kontrakInput = document.getElementById('input-kontrak').value;
+
+            const idBaru = "REL-00" + (Math.floor(Math.random() * 900) + 100);
+
+            // Masukkan data baru ke array
+            dataRelawan.push({
+                id: idBaru,
+                nik: nikInput,
+                nama: namaInput,
+                telp: telpInput,
+                ttl: ttlInput,
+                alamat: alamatInput,
+                keahlian: keahlianInput,
+                waktu: waktuInput,
+                kontrak: kontrakInput
+            });
+
+            // SIMPAN PERMANEN KE LOCALSTORAGE BROWSER
+            localStorage.setItem('db_relawan', JSON.stringify(dataRelawan));
+
+            renderTabel();
+            document.getElementById('form-relawan').reset();
+            document.getElementById('success-modal').classList.remove('hidden');
+        }
+
+        function tutupModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+        }
+
+        function bukaModalHapus(id) {
+            document.getElementById('delete-id-target').value = id;
+            document.getElementById('delete-modal').classList.remove('hidden');
+        }
+
+        function tutupModalHapus() {
+            document.getElementById('delete-modal').classList.add('hidden');
+        }
+
+        function prosesHapus() {
+            const idTarget = document.getElementById('delete-id-target').value;
+            const alasanDipilih = document.querySelector('input[name="alasan-hapus"]:checked').value;
+
+            // Filter data untuk membuang relawan yang dihapus
+            dataRelawan = dataRelawan.filter(item => item.id !== idTarget);
+
+            // UPDATE PERMANEN DI LOCALSTORAGE
+            localStorage.setItem('db_relawan', JSON.stringify(dataRelawan));
+
+            tutupModalHapus();
+            renderTabel();
+
+            document.getElementById('deleted-reason-text').innerText = `Data dihapus dengan alasan: ${alasanDipilih}`;
+            document.getElementById('deleted-success-modal').classList.remove('hidden');
+        }
+
+        function tutupModalDeletedSuccess() {
+            document.getElementById('deleted-success-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
