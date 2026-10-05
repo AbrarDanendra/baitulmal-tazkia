@@ -292,13 +292,15 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+  
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwPgguhmI1VVtyNbQnyAk9tneZ5NMxa18XDolh-xzbHKu3O1S015sZjmBTgtFj_DUxkEg/exec";
+
         let dataRelawan = JSON.parse(localStorage.getItem('db_relawan')) || [];
 
         window.onload = function() {
             renderTabel();
         };
 
-        // Fungsi Buka/Tutup Sidebar di HP (Hamburger Menu)
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
@@ -336,7 +338,6 @@
                 document.getElementById('page-title').innerText = "Presensi & Jam Kerja Relawan";
             }
 
-            // Tutup sidebar otomatis di HP setelah menu diklik
             if (window.innerWidth < 768) {
                 toggleSidebar();
             }
@@ -415,7 +416,7 @@
 
             const idBaru = "REL-00" + (Math.floor(Math.random() * 900) + 100);
 
-            dataRelawan.push({
+            const dataBaru = {
                 id: idBaru,
                 nik: nikInput,
                 nama: namaInput,
@@ -425,13 +426,29 @@
                 keahlian: keahlianInput,
                 waktu: waktuInput,
                 kontrak: kontrakInput
+            };
+
+            // Kirim ke Google Sheets & simpan lokal
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(dataBaru)
+            })
+            .then(() => {
+                dataRelawan.push(dataBaru);
+                localStorage.setItem('db_relawan', JSON.stringify(dataRelawan));
+
+                renderTabel();
+                document.getElementById('form-relawan').reset();
+                document.getElementById('success-modal').classList.remove('hidden');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Gagal menyimpan data ke server online.');
             });
-
-            localStorage.setItem('db_relawan', JSON.stringify(dataRelawan));
-
-            renderTabel();
-            document.getElementById('form-relawan').reset();
-            document.getElementById('success-modal').classList.remove('hidden');
         }
 
         function tutupModal() {
