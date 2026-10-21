@@ -2,7 +2,7 @@
 ## (MODULAR ARCHITECTURE & FUNCTIONAL SPECIFICATION)
 ### SUBSISTEM RELAWAN DAN OPERASIONAL ACARA
 
-**Proyek Klaster Operasional — Baitulmal Tazkia**  
+**Proyek Relawan dan Operasional — Baitulmal Tazkia**  
 **Program Studi Sistem Informasi, STMIK Tazkia (Gasal 2026/2027)**  
 **Kelompok 11**
 
