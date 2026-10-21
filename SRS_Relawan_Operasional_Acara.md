@@ -2,7 +2,7 @@
 ## SUBSISTEM RELAWAN DAN OPERASIONAL ACARA
 Berdasarkan Standar ISO/IEC/IEEE 29148:2018
 
-**Baitulmal Tazkia — Klaster Operasional (Kelompok 11)**  
+**Baitulmal Tazkia — Relawan dan Operasional (Kelompok 11)**  
 **Program Studi Sistem Informasi, STMIK Tazkia (Gasal 2026/2027)**
 
 | Anggota Kelompok | NIM |
