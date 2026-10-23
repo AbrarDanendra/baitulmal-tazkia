@@ -39,6 +39,7 @@ Berdasarkan analisis pemangku kepentingan awal, pengguna sistem ini dikelompokka
 2. **Staf Operasional Acara:** Bertanggung jawab menyusun daftar perlengkapan, menentukan penanggung jawab sesi acara, dan mengelola kebutuhan operasional di lokasi acara.
 3. **Relawan:** Mendaftarkan diri, memilih jadwal kesediaan waktu, melihat penugasan penugasan, serta memantau perolehan jam kerelawanan dan penghargaan.
 4. **Manajemen Baitulmal Tazkia:** Mengakses data rekapitulasi jam kerelawanan dan laporan operasional untuk keperluan audit dan evaluasi manajemen.
+5. **Relawan Lokal / Kader Lapangan:** Bertanggung jawab melakukan asesmen dan pendataan langsung terhadap calon penerima manfaat (warga prasejahtera) di wilayah masing-masing (seperti Sentul, Citarunggul, dll.) menggunakan formulir digital serta mengunggah bukti foto kunjungan lapangan.
 
 ### 2.3 Batasan Lingkup (In-Scope & Out-of-Scope)
 * **Lingkup Utama (In-Scope):**
@@ -103,6 +104,14 @@ Berikut adalah rincian *Use Case* Utama yang dikelola oleh subsistem Relawan dan
 ### 4.4 UC-04: Rekapitulasi Jam Kerelawanan dan Penghargaan
 * **Aktor Utama:** Manajemen / Koordinator Relawan.
 * **Deskripsi Singkat:** Merekapitulasi total jam kerelawanan terkumpul per relawan untuk keperluan apresiasi dan penghargaan.
+### 4.5 UC-05: Asesmen Lapangan dan Pengunggahan Bukti Kunjungan
+* **Aktor Utama:** Relawan Lokal / Kader Lapangan.
+* **Deskripsi Singkat:** Memungkinkan relawan lokal mengisi formulir asesmen digital untuk mendata warga prasejahtera serta mengunggah foto dokumentasi kunjungan lapangan secara real-time.
+* **Alur Utama:**
+  1. Relawan lokal mengakses menu "Asesmen Lapangan" di aplikasi seluler.
+  2. Relawan mengisi formulir digital (mencakup data identitas warga, kondisi tempat tinggal, kesehatan, dan aspek                kelayakan).
+  3. Relawan mengambil dan mengunggah foto bukti kunjungan rumah warga secara langsung sebagai verifikasi.
+  4. Sistem menyimpan data asesmen ke database pusat agar dapat direkap dan ditinjau oleh tim manajemen BMTZ.
 
 ---
 
