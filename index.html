@@ -36,7 +36,7 @@
             </div>
             <h3 id="modal-title" class="text-lg font-bold text-slate-900 mb-1">Berhasil!</h3>
             <p id="modal-message" class="text-sm text-slate-600 mb-6">Berhasil memperbarui data sistem</p>
-            <button onclick="closeModal()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium py-2.5 rounded-xl text-sm transition shadow-md">
+            <button onclick="closeModal()" id="modal-btn-close" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium py-2.5 rounded-xl text-sm transition shadow-md">
                 Tutup
             </button>
         </div>
@@ -49,21 +49,21 @@
                 <i class="fa-solid fa-camera-retro"></i>
             </div>
             <div>
-                <h3 class="text-lg font-bold text-slate-900">Ubah Foto Profil</h3>
-                <p class="text-xs text-slate-500 mt-1">Pilih metode pengambilan gambar untuk akun Anda</p>
+                <h3 id="txt-modal-foto-title" class="text-lg font-bold text-slate-900">Ubah Foto Profil</h3>
+                <p id="txt-modal-foto-sub" class="text-xs text-slate-500 mt-1">Pilih metode pengambilan gambar untuk akun Anda</p>
             </div>
             <div class="space-y-2 pt-2">
-                <button onclick="bukaKameraLangsung()" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium py-2.5 rounded-xl text-xs transition flex items-center justify-center space-x-2 shadow-sm">
+                <button onclick="bukaKameraLangsung()" id="txt-btn-kamera" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium py-2.5 rounded-xl text-xs transition flex items-center justify-center space-x-2 shadow-sm">
                     <i class="fa-solid fa-camera"></i>
                     <span>Ambil Foto Sekarang (Kamera)</span>
                 </button>
-                <button onclick="bukaGaleriFile()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-2.5 rounded-xl text-xs transition flex items-center justify-center space-x-2">
+                <button onclick="bukaGaleriFile()" id="txt-btn-galeri" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-2.5 rounded-xl text-xs transition flex items-center justify-center space-x-2">
                     <i class="fa-solid fa-images"></i>
                     <span>Pilih dari Galeri / File</span>
                 </button>
             </div>
             <div class="pt-2 border-t border-slate-100">
-                <button onclick="closeModalPilihFoto()" class="text-xs text-slate-400 hover:text-slate-600 font-medium">Batal</button>
+                <button onclick="closeModalPilihFoto()" id="txt-btn-batal" class="text-xs text-slate-400 hover:text-slate-600 font-medium">Batal</button>
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
     <div id="modal-detail" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 backdrop-blur-xs p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 animate-scale-in relative">
             <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
-                <h3 class="text-lg font-bold text-slate-900 flex items-center">
+                <h3 id="txt-detail-title" class="text-lg font-bold text-slate-900 flex items-center">
                     <i class="fa-solid fa-address-card text-orange-600 mr-2"></i> Detail Informasi Warga
                 </h3>
                 <button onclick="closeDetailModal()" class="text-slate-400 hover:text-slate-600">
@@ -85,7 +85,7 @@
             </div>
             <div id="detail-content" class="space-y-3 text-sm text-slate-700"></div>
             <div class="mt-6 pt-4 border-t border-slate-100 text-right">
-                <button onclick="closeDetailModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-sm font-medium transition">
+                <button onclick="closeDetailModal()" id="txt-btn-tutup-detail" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-sm font-medium transition">
                     Tutup
                 </button>
             </div>
@@ -96,27 +96,32 @@
     <div id="app" class="flex-grow flex flex-col h-full">
         
         <!-- ================= PAGE: AUTH ================= -->
-        <div id="page-login" class="flex-grow flex items-center justify-center p-4 bg-gradient-to-br from-slate-900 via-slate-800 to-orange-950 min-h-screen">
+        <div id="page-login" class="flex-grow flex items-center justify-center p-4 bg-gradient-to-br from-slate-900 via-slate-800 to-orange-950 min-h-screen relative">
+            
+            <!-- TOMBOL GANTI BAHASA DI LOGIN -->
+            <div class="absolute top-6 right-6">
+                <select id="select-lang" onchange="changeLanguage(this.value)" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 text-white border border-slate-700 focus:outline-none cursor-pointer">
+                    <option value="id">🇮🇩 Indonesia</option>
+                    <option value="en">🇬🇧 English</option>
+                </select>
+            </div>
+
             <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden p-8 border border-slate-800/10">
                 <div class="text-center mb-6">
                     <div class="inline-flex flex-col items-center justify-center mb-4">
                         <div class="w-16 h-16 bg-white rounded-2xl p-2 shadow-sm border border-slate-200 flex items-center justify-center overflow-hidden">
-                            <img src="logo.png" alt="Logo Tazkia Baitulmal" class="w-full h-full object-contain">
+                            <img src="/logo.png" alt="Logo Tazkia Baitulmal" class="w-full h-full object-contain">
                         </div>
                         <span class="font-extrabold text-slate-900 text-base tracking-wider mt-2">TAZKIA</span>
                         <span class="font-bold text-slate-700 text-xs tracking-widest uppercase">BAITULMAL</span>
                     </div>
-                    <p class="text-xs text-slate-500 mt-1">Portal Operasional Relawan & Bantuan Sosial</p>
+                    <p id="txt-login-subtitle" class="text-xs text-slate-500 mt-1">Portal Operasional Relawan & Bantuan Sosial</p>
                 </div>
 
-                <div class="flex rounded-xl bg-slate-100 p-1 mb-6">
-                    <button type="button" id="tab-signin" onclick="switchAuthMode('signin')" class="flex-1 py-2 text-xs font-semibold rounded-lg transition bg-white text-slate-800 shadow-xs">Masuk (Sign In)</button>
-                    <button type="button" id="tab-signup" onclick="switchAuthMode('signup')" class="flex-1 py-2 text-xs font-semibold rounded-lg transition text-slate-500">Daftar (Sign Up)</button>
-                </div>
-
+                <!-- FORM UTAMA -->
                 <form id="form-auth" onsubmit="handleAuth(event)" class="space-y-4">
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Pilih Peran (Role)</label>
+                        <label id="lbl-role" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Pilih Peran (Role)</label>
                         <select id="auth-role" class="w-full px-4 py-2.5 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-white">
                             <option value="relawan">Relawan Lapangan</option>
                             <option value="admin">Administrator / Pengurus</option>
@@ -124,12 +129,12 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Pengguna</label>
+                        <label id="lbl-name" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Pengguna</label>
                         <input type="text" id="auth-name" required class="w-full px-4 py-2.5 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Kata Sandi (Password)</label>
+                        <label id="lbl-password" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Kata Sandi (Password)</label>
                         <div class="relative">
                             <input type="password" id="auth-password" required class="w-full pl-4 pr-10 py-2.5 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
                             <button type="button" onclick="togglePasswordVisibility()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none">
@@ -142,6 +147,12 @@
                         Masuk ke Sistem <i class="fa-solid fa-arrow-right ml-2"></i>
                     </button>
                 </form>
+
+                <!-- TOGGLE SIGN IN / SIGN UP ALA WEB MODERN -->
+                <div class="mt-6 text-center text-xs text-slate-500 border-t border-slate-100 pt-4">
+                    <span id="txt-auth-switch-label">Belum memiliki akun?</span>
+                    <button type="button" onclick="toggleAuthMode()" id="txt-auth-switch-btn" class="font-bold text-orange-600 hover:underline ml-1">Daftar sekarang</button>
+                </div>
             </div>
         </div>
 
@@ -153,7 +164,7 @@
                 <div class="p-5 border-b border-slate-800 flex items-center justify-between">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-white rounded-xl p-1 shadow-md flex items-center justify-center shrink-0 overflow-hidden">
-                            <img src="logo.png" alt="Logo Tazkia Baitulmal" class="w-full h-full object-contain">
+                            <img src="/logo.png" alt="Logo Tazkia Baitulmal" class="w-full h-full object-contain">
                         </div>
                         <div class="leading-tight">
                             <span class="font-bold text-white text-xs block tracking-wide">TAZKIA</span>
@@ -191,14 +202,22 @@
                         </button>
                         <h2 id="topbar-title" class="text-base font-bold text-slate-800">Dashboard Operasional</h2>
                     </div>
-                    <div class="flex items-center space-x-3">
-                        <div class="text-right hidden sm:block">
-                            <p id="topbar-user-name" class="text-xs font-bold text-slate-700">Nama User</p>
-                            <p class="text-[10px] text-orange-600 font-medium">● Sesi Aktif</p>
-                        </div>
-                        <div class="w-9 h-9 bg-orange-50 text-orange-600 rounded-full flex items-center justify-center font-bold text-sm shadow-inner border border-orange-100 overflow-hidden">
-                            <i class="fa-solid fa-user" id="topbar-default-icon"></i>
-                            <img id="topbar-img" class="w-full h-full object-cover hidden" alt="Avatar">
+                    <div class="flex items-center space-x-4">
+                        <!-- SELECT BAHASA DI HEADER -->
+                        <select id="select-lang-dash" onchange="changeLanguage(this.value)" class="text-xs px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 border border-slate-300 focus:outline-none cursor-pointer">
+                            <option value="id">🇮🇩 ID</option>
+                            <option value="en">🇬🇧 EN</option>
+                        </select>
+
+                        <div class="flex items-center space-x-3">
+                            <div class="text-right hidden sm:block">
+                                <p id="topbar-user-name" class="text-xs font-bold text-slate-700">Nama User</p>
+                                <p id="txt-active-session" class="text-[10px] text-orange-600 font-medium">● Sesi Aktif</p>
+                            </div>
+                            <div class="w-9 h-9 bg-orange-50 text-orange-600 rounded-full flex items-center justify-center font-bold text-sm shadow-inner border border-orange-100 overflow-hidden">
+                                <i class="fa-solid fa-user" id="topbar-default-icon"></i>
+                                <img id="topbar-img" class="w-full h-full object-cover hidden" alt="Avatar">
+                            </div>
                         </div>
                     </div>
                 </header>
@@ -210,40 +229,40 @@
                         <!-- VIEW: RELAWAN -->
                         <div id="view-relawan" class="hidden space-y-6">
                             <div class="bg-gradient-to-r from-[#222222] via-slate-800 to-orange-950 rounded-2xl p-6 text-white shadow-md border-l-4 border-orange-500">
-                                <h2 class="text-2xl font-bold mb-2">Formulir Pendaftaran Warga / Pasien</h2>
-                                <p class="text-slate-300 text-sm">Daftarkan warga atau pasien yang membutuhkan bantuan pengobatan medis, evakuasi, atau bantuan sosial operasional Tazkia Baitulmal.</p>
+                                <h2 id="txt-relawan-banner-title" class="text-2xl font-bold mb-2">Formulir Pendaftaran Warga / Pasien</h2>
+                                <p id="txt-relawan-banner-desc" class="text-slate-300 text-sm">Daftarkan warga atau pasien yang membutuhkan bantuan pengobatan medis, evakuasi, atau bantuan sosial operasional Tazkia Baitulmal.</p>
                             </div>
 
                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                                 <div class="lg:col-span-1 bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-                                    <h3 class="text-base font-bold text-slate-800 mb-4 flex items-center">
+                                    <h3 id="txt-form-pasien-title" class="text-base font-bold text-slate-800 mb-4 flex items-center">
                                         <i class="fa-solid fa-user-plus text-orange-600 mr-2"></i> Input Data Pasien Baru
                                     </h3>
                                     <form id="form-pasien" onsubmit="handleTambahPasien(event)" class="space-y-4">
                                         <div>
-                                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Lengkap Warga / Pasien</label>
+                                            <label id="lbl-p-nama" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Lengkap Warga / Pasien</label>
                                             <input type="text" id="p-nama" required class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">NIK Warga (16 Digit)</label>
+                                            <label id="lbl-p-nik" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">NIK Warga (16 Digit)</label>
                                             <input type="text" id="p-nik" maxlength="16" required placeholder="3271xxxxxxxxxxxx" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
                                         </div>
                                         <div class="grid grid-cols-2 gap-3">
                                             <div>
-                                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Usia (Tahun)</label>
+                                                <label id="lbl-p-usia" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Usia (Tahun)</label>
                                                 <input type="number" id="p-usia" required class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
                                             </div>
                                             <div>
-                                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">No. Telp / WA</label>
+                                                <label id="lbl-p-telp" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">No. Telp / WA</label>
                                                 <input type="text" id="p-telp" required class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
                                             </div>
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Jenis Bantuan</label>
+                                            <label id="lbl-p-jenis" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Jenis Bantuan</label>
                                             <input type="text" id="p-jenis" required placeholder="Misal: Pengobatan Medis" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Tingkat Urgensi / Prioritas</label>
+                                            <label id="lbl-p-urgensi" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Tingkat Urgensi / Prioritas</label>
                                             <select id="p-urgensi" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-orange-500 focus:outline-none">
                                                 <option value="Tinggi (Darurat)">🔴 Tinggi (Butuh Evakuasi/Mendesak)</option>
                                                 <option value="Sedang">🟡 Sedang (Pengobatan/Rawat Jalan)</option>
@@ -251,14 +270,14 @@
                                             </select>
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Lengkap Domisili</label>
+                                            <label id="lbl-p-alamat" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Alamat Lengkap Domisili</label>
                                             <textarea id="p-alamat" rows="2" required class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none"></textarea>
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Deskripsi Keluhan / Kondisi</label>
+                                            <label id="lbl-p-keluhan" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Deskripsi Keluhan / Kondisi</label>
                                             <textarea id="p-keluhan" rows="3" required class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none"></textarea>
                                         </div>
-                                        <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium py-2.5 rounded-xl text-sm transition shadow">
+                                        <button type="submit" id="btn-submit-warga" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium py-2.5 rounded-xl text-sm transition shadow">
                                             <i class="fa-solid fa-paper-plane mr-1"></i> Kirim & Daftarkan Warga
                                         </button>
                                     </form>
@@ -266,11 +285,11 @@
 
                                 <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col">
                                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
-                                        <h3 class="text-base font-bold text-slate-800 flex items-center">
+                                        <h3 id="txt-list-warga-title" class="text-base font-bold text-slate-800 flex items-center">
                                             <i class="fa-solid fa-clipboard-list text-orange-600 mr-2"></i> Daftar Warga Terdaftar
                                         </h3>
                                         <div class="flex items-center space-x-2">
-                                            <input type="text" id="search-relawan" oninput="renderDashboard()" placeholder="Cari nama/bantuan..." class="text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-orange-500 w-36 sm:w-48">
+                                            <input type="text" id="search-relawan" oninput="renderDashboard()" placeholder="Cari nama..." class="text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-orange-500 w-36 sm:w-48">
                                             <select id="filter-status-relawan" onchange="renderDashboard()" class="text-xs px-2 py-2 rounded-lg border border-slate-300 bg-white focus:outline-none">
                                                 <option value="">Semua Status</option>
                                                 <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
@@ -283,10 +302,10 @@
                                         <table class="w-full text-left border-collapse">
                                             <thead>
                                                 <tr class="border-b border-slate-200 text-xs font-semibold text-slate-500 uppercase">
-                                                    <th class="py-3 px-3">Warga / Pasien</th>
-                                                    <th class="py-3 px-3">Jenis Bantuan</th>
-                                                    <th class="py-3 px-3">Status</th>
-                                                    <th class="py-3 px-3 text-center">Aksi</th>
+                                                    <th id="th-warga" class="py-3 px-3">Warga / Pasien</th>
+                                                    <th id="th-bantuan" class="py-3 px-3">Jenis Bantuan</th>
+                                                    <th id="th-status" class="py-3 px-3">Status</th>
+                                                    <th id="th-aksi" class="py-3 px-3 text-center">Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="tabel-pasien-relawan" class="divide-y divide-slate-100 text-sm"></tbody>
@@ -301,7 +320,7 @@
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
                                     <div>
-                                        <p class="text-xs font-medium text-slate-500 uppercase">Total Permohonan</p>
+                                        <p id="txt-stat-1" class="text-xs font-medium text-slate-500 uppercase">Total Permohonan</p>
                                         <h4 id="stat-total" class="text-2xl font-bold text-slate-800 mt-1">0</h4>
                                     </div>
                                     <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl">
@@ -310,7 +329,7 @@
                                 </div>
                                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
                                     <div>
-                                        <p class="text-xs font-medium text-slate-500 uppercase">Sedang Ditangani</p>
+                                        <p id="txt-stat-2" class="text-xs font-medium text-slate-500 uppercase">Sedang Ditangani</p>
                                         <h4 id="stat-proses" class="text-2xl font-bold text-amber-600 mt-1">0</h4>
                                     </div>
                                     <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-xl">
@@ -319,7 +338,7 @@
                                 </div>
                                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
                                     <div>
-                                        <p class="text-xs font-medium text-slate-500 uppercase">Selesai Ditangani</p>
+                                        <p id="txt-stat-3" class="text-xs font-medium text-slate-500 uppercase">Selesai Ditangani</p>
                                         <h4 id="stat-selesai" class="text-2xl font-bold text-orange-600 mt-1">0</h4>
                                     </div>
                                     <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center text-xl">
@@ -331,18 +350,18 @@
                             <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
                                 <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4">
                                     <div>
-                                        <h3 class="text-base font-bold text-slate-800">Panel Validasi & Manajemen Operasional Pasien</h3>
-                                        <p class="text-sm text-slate-500">Ubah status, tambah catatan penanganan, atau ekspor laporan.</p>
+                                        <h3 id="txt-admin-panel-title" class="text-base font-bold text-slate-800">Panel Validasi & Manajemen Operasional Pasien</h3>
+                                        <p id="txt-admin-panel-sub" class="text-sm text-slate-500">Ubah status, tambah catatan penanganan, atau ekspor laporan.</p>
                                     </div>
                                     <div class="flex flex-wrap items-center gap-2">
-                                        <input type="text" id="search-admin" oninput="renderDashboard()" placeholder="Cari nama/bantuan..." class="text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-orange-500">
+                                        <input type="text" id="search-admin" oninput="renderDashboard()" placeholder="Cari..." class="text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-orange-500">
                                         <select id="filter-status-admin" onchange="renderDashboard()" class="text-xs px-2 py-2 rounded-lg border border-slate-300 bg-white focus:outline-none">
                                             <option value="">Semua Status</option>
                                             <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
                                             <option value="Sedang Ditangani">Sedang Ditangani</option>
                                             <option value="Selesai">Selesai</option>
                                         </select>
-                                        <button onclick="exportToCSV()" class="bg-orange-50 hover:bg-orange-100 text-orange-800 px-3 py-2 rounded-lg text-xs font-medium transition flex items-center space-x-1">
+                                        <button onclick="exportToCSV()" id="btn-export-csv" class="bg-orange-50 hover:bg-orange-100 text-orange-800 px-3 py-2 rounded-lg text-xs font-medium transition flex items-center space-x-1">
                                             <i class="fa-solid fa-file-excel"></i>
                                             <span>Ekspor CSV</span>
                                         </button>
@@ -353,12 +372,12 @@
                                     <table class="w-full text-left border-collapse">
                                         <thead>
                                             <tr class="border-b border-slate-200 text-xs font-semibold text-slate-500 uppercase">
-                                                <th class="py-3 px-3">Warga / Pasien</th>
-                                                <th class="py-3 px-3">Kontak & Alamat</th>
-                                                <th class="py-3 px-3">Jenis & Urgensi</th>
-                                                <th class="py-3 px-3">Catatan Admin / Progres</th>
-                                                <th class="py-3 px-3">Status</th>
-                                                <th class="py-3 px-3 text-center">Aksi</th>
+                                                <th id="th-admin-warga" class="py-3 px-3">Warga / Pasien</th>
+                                                <th id="th-admin-kontak" class="py-3 px-3">Kontak & Alamat</th>
+                                                <th id="th-admin-jenis" class="py-3 px-3">Jenis & Urgensi</th>
+                                                <th id="th-admin-catatan" class="py-3 px-3">Catatan Admin / Progres</th>
+                                                <th id="th-admin-status" class="py-3 px-3">Status</th>
+                                                <th id="th-admin-aksi" class="py-3 px-3 text-center">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody id="tabel-pasien-admin" class="divide-y divide-slate-100 text-sm"></tbody>
@@ -379,18 +398,18 @@
                                     </div>
                                     <div class="absolute inset-0 bg-black/50 rounded-full flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition duration-200 text-white text-[10px] font-semibold text-center p-1">
                                         <i class="fa-solid fa-camera mb-0.5 text-sm"></i>
-                                        <span>Ubah Foto</span>
+                                        <span id="txt-ubah-foto">Ubah Foto</span>
                                     </div>
                                 </div>
 
                                 <div>
                                     <h2 id="profile-display-name" class="text-2xl font-bold">Nama User</h2>
                                     <p id="profile-display-role" class="text-orange-300 text-sm capitalize">Peran Pengguna</p>
-                                    <span class="inline-block mt-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/10 text-white">Akun Terverifikasi</span>
+                                    <span id="txt-verified-badge" class="inline-block mt-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/10 text-white">Akun Terverifikasi</span>
                                 </div>
                             </div>
                             <div class="text-center md:text-right bg-black/20 p-4 rounded-xl border border-white/10 w-full md:w-auto">
-                                <p class="text-xs text-orange-300 uppercase font-semibold">ID Registrasi Anggota</p>
+                                <p id="txt-member-id-label" class="text-xs text-orange-300 uppercase font-semibold">ID Registrasi Anggota</p>
                                 <p id="profile-member-id" class="text-lg font-mono font-bold tracking-wider">CRV-882190</p>
                             </div>
                         </div>
@@ -398,7 +417,7 @@
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                             <div class="space-y-6">
                                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 relative overflow-hidden">
-                                    <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 flex items-center">
+                                    <h3 id="txt-kta-title" class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 flex items-center">
                                         <i class="fa-solid fa-id-card text-orange-600 mr-2"></i> Kartu Tanda Anggota Resmi
                                     </h3>
                                     
@@ -408,10 +427,10 @@
                                         <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-4">
                                             <div class="flex items-center space-x-2">
                                                 <div class="w-7 h-7 bg-white rounded-md p-0.5 flex items-center justify-center shadow overflow-hidden">
-                                                    <img src="logo.png" alt="Logo Tazkia Baitulmal" class="w-full h-full object-contain">
+                                                    <img src="/logo.png" alt="Logo Tazkia Baitulmal" class="w-full h-full object-contain">
                                                 </div>
                                                 <div>
-                                                    <span class="text-[9px] tracking-widest uppercase font-bold text-orange-400 block leading-none">KARTU TANDA ANGGOTA</span>
+                                                    <span id="txt-kta-header" class="text-[9px] tracking-widest uppercase font-bold text-orange-400 block leading-none">KARTU TANDA ANGGOTA</span>
                                                     <span class="text-[8px] text-slate-400">Tazkia Baitulmal Official</span>
                                                 </div>
                                             </div>
@@ -425,15 +444,15 @@
                                             </div>
                                             <div class="flex-grow space-y-1">
                                                 <div>
-                                                    <span class="text-[9px] text-slate-400 uppercase tracking-wider block">Nama Lengkap</span>
+                                                    <span id="txt-kta-name-lbl" class="text-[9px] text-slate-400 uppercase tracking-wider block">Nama Lengkap</span>
                                                     <h4 id="kta-name" class="font-bold text-sm tracking-wide text-white leading-tight">Nama User</h4>
                                                 </div>
                                                 <div>
-                                                    <span class="text-[9px] text-slate-400 uppercase tracking-wider block">ID Anggota</span>
+                                                    <span id="txt-kta-id-lbl" class="text-[9px] text-slate-400 uppercase tracking-wider block">ID Anggota</span>
                                                     <span class="font-mono text-xs text-orange-400 font-bold tracking-wider">CRV-882190</span>
                                                 </div>
                                                 <div>
-                                                    <span class="text-[9px] text-slate-400 uppercase tracking-wider block">Peran / Jabatan</span>
+                                                    <span id="txt-kta-role-lbl" class="text-[9px] text-slate-400 uppercase tracking-wider block">Peran / Jabatan</span>
                                                     <span id="kta-role" class="text-xs font-medium text-slate-200 capitalize">Relawan</span>
                                                 </div>
                                             </div>
@@ -442,7 +461,7 @@
                                         <div class="flex items-center justify-between pt-3 border-t border-white/10 text-[10px]">
                                             <div class="flex items-center space-x-1.5 text-slate-300">
                                                 <i class="fa-solid fa-shield-check text-orange-400"></i>
-                                                <span>Status: <strong class="text-orange-400">Aktif</strong></span>
+                                                <span id="txt-kta-status">Status: <strong class="text-orange-400">Aktif</strong></span>
                                             </div>
                                             <div class="bg-white/10 px-2 py-1 rounded font-mono text-[9px] tracking-widest text-slate-300 border border-white/10">
                                                 ||||| | ||| || |||
@@ -450,91 +469,44 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                                    <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 flex items-center">
-                                        <i class="fa-solid fa-award text-orange-600 mr-2"></i> Statistik & Lencana
-                                    </h3>
-                                    <div class="grid grid-cols-2 gap-3 mb-4">
-                                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-center">
-                                            <span id="stat-profile-input" class="text-xl font-bold text-slate-800 block">0</span>
-                                            <span class="text-[11px] text-slate-500 font-medium">Warga Didaftarkan</span>
-                                        </div>
-                                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-center">
-                                            <span class="text-xl font-bold text-orange-600 block">Aktif</span>
-                                            <span class="text-[11px] text-slate-500 font-medium">Status Tugas</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center space-x-3 p-3 rounded-xl bg-orange-50 border border-orange-100 text-orange-900 text-xs">
-                                        <i class="fa-solid fa-medal text-xl text-orange-600"></i>
-                                        <div>
-                                            <strong>Pencapaian: Relawan Teladan</strong>
-                                            <p class="text-[11px] text-orange-800">Aktif membantu pendataan dan tanggap darurat warga.</p>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="lg:col-span-2 space-y-6">
                                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                                    <h3 class="text-base font-bold text-slate-800 mb-4 flex items-center">
+                                    <h3 id="txt-profile-settings" class="text-base font-bold text-slate-800 mb-4 flex items-center">
                                         <i class="fa-solid fa-user-pen text-orange-600 mr-2"></i> Pengaturan & Keamanan Profil
                                     </h3>
                                     <form onsubmit="handleUpdateProfile(event)" class="space-y-4">
                                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                             <div>
-                                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Lengkap</label>
+                                                <label id="lbl-prof-name" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Nama Lengkap</label>
                                                 <input type="text" id="prof-input-name" required class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
                                             </div>
                                             <div>
-                                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Tempat, Tanggal Lahir</label>
-                                                <input type="text" id="prof-input-ttl" placeholder="Contoh: Bogor, 12 Agustus 2002" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
+                                                <label id="lbl-prof-ttl" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Tempat, Tanggal Lahir</label>
+                                                <input type="text" id="prof-input-ttl" placeholder="Bogor, 12 Agustus 2002" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
                                             </div>
                                         </div>
                                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                             <div>
-                                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Kontak Darurat Pribadi</label>
-                                                <input type="text" id="prof-input-emergency" placeholder="Nama & No. HP Kerabat" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
+                                                <label id="lbl-prof-emergency" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Kontak Darurat Pribadi</label>
+                                                <input type="text" id="prof-input-emergency" placeholder="Nama & No. HP" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
                                             </div>
                                             <div>
-                                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Kata Sandi Baru (Opsional)</label>
+                                                <label id="lbl-prof-pass" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Kata Sandi Baru (Opsional)</label>
                                                 <input type="password" id="prof-input-password" placeholder="Kosongkan jika tidak diubah" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
                                             </div>
                                         </div>
                                         <div class="flex items-center justify-between pt-2">
                                             <label class="flex items-center space-x-2 text-xs text-slate-600">
                                                 <input type="checkbox" id="prof-notif" checked class="rounded border-slate-300 text-orange-600 focus:ring-orange-500">
-                                                <span>Terima Notifikasi Darurat via WhatsApp</span>
+                                                <span id="txt-notif-label">Terima Notifikasi Darurat via WhatsApp</span>
                                             </label>
-                                            <button type="submit" class="bg-orange-600 hover:bg-orange-700 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition shadow-md">
+                                            <button type="submit" id="btn-save-profile" class="bg-orange-600 hover:bg-orange-700 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition shadow-md">
                                                 Simpan Perubahan
                                             </button>
                                         </div>
                                     </form>
-                                </div>
-
-                                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                                    <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 flex items-center">
-                                        <i class="fa-solid fa-clock-rotate-left text-orange-600 mr-2"></i> Riwayat Aktivitas Pengguna (Activity Log)
-                                    </h3>
-                                    <div class="overflow-x-auto">
-                                        <table class="w-full text-left text-xs">
-                                            <thead>
-                                                <tr class="border-b border-slate-100 text-slate-400 uppercase">
-                                                    <th class="py-2 px-2">Aktivitas</th>
-                                                    <th class="py-2 px-2">Keterangan</th>
-                                                    <th class="py-2 px-2 text-right">Waktu</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="activity-log-tbody" class="divide-y divide-slate-50 text-slate-600">
-                                                <tr>
-                                                    <td class="py-2.5 px-2 font-medium text-slate-800"><i class="fa-solid fa-right-to-bracket text-orange-600 mr-1"></i> Masuk Sistem</td>
-                                                    <td class="py-2.5 px-2">Sesi login berhasil dimulai pada perangkat ini.</td>
-                                                    <td class="py-2.5 px-2 text-right text-slate-400">Hari ini</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -548,47 +520,18 @@
                         <div class="space-y-4 md:col-span-4">
                             <div class="flex items-center space-x-3">
                                 <div class="w-9 h-9 bg-white rounded-lg p-1 flex items-center justify-center overflow-hidden">
-                                    <img src="logo.png" alt="Logo Tazkia Baitulmal" class="w-full h-full object-contain">
+                                    <img src="/logo.png" alt="Logo Tazkia Baitulmal" class="w-full h-full object-contain">
                                 </div>
                                 <span class="font-bold text-white text-base">Baitulmal Tazkia</span>
                             </div>
-                            <p class="text-slate-400 leading-relaxed text-[11px]">
-                                BAITULMAL TAZKIA merupakan salah satu lembaga zakat berbadan hukum yayasan yang menghimpun dan mengelola dana Zakat, Infaq, Shodaqoh, dan Wakaf dari masyarakat yang bertujuan untuk meningkatkan kualitas hidup kaum dhuafa/mustahik menuju ummat yang berdaya.
+                            <p id="txt-footer-desc" class="text-slate-400 leading-relaxed text-[11px]">
+                                BAITULMAL TAZKIA merupakan salah satu lembaga zakat berbadan hukum yayasan yang menghimpun dan mengelola dana Zakat, Infaq, Shodaqoh, dan Wakaf dari masyarakat.
                             </p>
                         </div>
-                        <div class="md:col-span-2">
-                            <h4 class="font-bold text-white text-sm mb-4 tracking-wide">Program</h4>
-                            <ul class="space-y-2 text-slate-400">
-                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> Zakat</a></li>
-                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> Donasi</a></li>
-                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> Wakaf</a></li>
-                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> Qurban</a></li>
-                            </ul>
-                        </div>
-                        <div class="md:col-span-2">
-                            <h4 class="font-bold text-white text-sm mb-4 tracking-wide">Tautan</h4>
-                            <ul class="space-y-2 text-slate-400">
-                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> Laporan</a></li>
-                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> Tentang Kami</a></li>
-                            </ul>
-                        </div>
-                        <div class="space-y-3 md:col-span-4">
-                            <h4 class="font-bold text-white text-sm mb-4 tracking-wide">Kontak</h4>
-                            <p class="flex items-center text-slate-400"><i class="fa-solid fa-user-tie w-5 text-orange-500 mr-2"></i> CS Tazkia Baitulmal</p>
-                            <p class="flex items-center text-slate-400"><i class="fa-solid fa-mobile-screen w-5 text-orange-500 mr-2"></i> (0813) 38888455</p>
-                            <p class="flex items-center text-slate-400"><i class="fa-solid fa-phone w-5 text-orange-500 mr-2"></i> (021) 8796217</p>
-                            <p class="flex items-center text-slate-400"><i class="fa-solid fa-envelope w-5 text-orange-500 mr-2"></i> baitulmaltazkia@gmail.com</p>
-                            <div class="flex space-x-3 pt-2 text-base text-slate-400">
-                                <a href="#" class="hover:text-orange-400"><i class="fa-brands fa-facebook"></i></a>
-                                <a href="#" class="hover:text-orange-400"><i class="fa-brands fa-twitter"></i></a>
-                                <a href="#" class="hover:text-orange-400"><i class="fa-brands fa-instagram"></i></a>
-                            </div>
-                        </div>
                     </div>
-                    
                     <div class="max-w-7xl mx-auto pt-6 flex flex-col sm:flex-row items-center justify-center text-slate-500 text-[11px] relative">
-                        <p class="text-center">Copyright &copy; 2026 Tazkia Baitulmal. All rights reserved.</p>
-                        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="absolute right-0 mt-4 sm:mt-0 w-10 h-10 bg-orange-600 hover:bg-orange-700 text-white rounded-xl flex items-center justify-center shadow-md transition" title="Kembali ke atas">
+                        <p id="txt-footer-copy">Copyright &copy; 2026 Tazkia Baitulmal. All rights reserved.</p>
+                        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="absolute right-0 mt-4 sm:mt-0 w-10 h-10 bg-orange-600 hover:bg-orange-700 text-white rounded-xl flex items-center justify-center shadow-md transition">
                             <i class="fa-solid fa-arrow-up text-sm"></i>
                         </button>
                     </div>
@@ -600,35 +543,220 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        let currentLang = localStorage.getItem('careops_lang') || 'id';
         let currentUser = JSON.parse(localStorage.getItem('careops_user')) || null;
         
-        let registeredAccounts = JSON.parse(localStorage.getItem('careops_accounts')) || [
-            { name: "Ahmad", role: "relawan", password: "123", ttl: "Bogor, 12 Agustus 2002", emergency: "Ibu Siti (081299998888)", photo: "" },
-            { name: "Admin Utama", role: "admin", password: "123", ttl: "Jakarta, 1 Januari 1995", emergency: "Kantor Operasional (021-555123)", photo: "" }
-        ];
-        let authMode = 'signin';
+        // AKUN DIKOSONGKAN (TIDAK ADA AKUN DEFAULT LAGI)
+        let registeredAccounts = JSON.parse(localStorage.getItem('careops_accounts')) || [];
+        let authMode = 'signin'; // 'signin' atau 'signup'
         let currentTab = localStorage.getItem('careops_tab') || 'dashboard';
 
-        let listPasien = JSON.parse(localStorage.getItem('careops_pasien')) || [
-            {
-                id: 1,
-                nama: "Bpk. Suhendra",
-                nik: "3201123456780001",
-                usia: 58,
-                telp: "081234567890",
-                jenis: "Pengobatan Medis Rutin",
-                urgensi: "Sedang",
-                alamat: "Kp. Cibinong RT 02/05, Kel. Cirimekar",
-                keluhan: "Kontrol rutin gula darah dan hipertensi, butuh pendampingan transport ke RSUD.",
-                status: "Sedang Ditangani",
-                relawan: "Ahmad (Relawan)",
-                catatan: "Jadwal jemput hari Selasa jam 08.00 WIB."
+        let listPasien = JSON.parse(localStorage.getItem('careops_pasien')) || [];
+
+        // KAMUS BAHASA (ID & EN)
+        const dict = {
+            id: {
+                loginSub: "Portal Operasional Relawan & Bantuan Sosial",
+                roleLbl: "Pilih Peran (Role)",
+                nameLbl: "Nama Pengguna",
+                passLbl: "Kata Sandi (Password)",
+                btnSignin: "Masuk ke Sistem",
+                btnSignup: "Daftar Akun Baru",
+                switchLabelIn: "Belum memiliki akun?",
+                switchBtnIn: "Daftar sekarang",
+                switchLabelUp: "Sudah memiliki akun?",
+                switchBtnUp: "Masuk di sini",
+                dashTitle: "Dashboard Operasional",
+                activeSession: "● Sesi Aktif",
+                relawanBannerTitle: "Formulir Pendaftaran Warga / Pasien",
+                relawanBannerDesc: "Daftarkan warga atau pasien yang membutuhkan bantuan pengobatan medis, evakuasi, atau bantuan sosial operasional Tazkia Baitulmal.",
+                formPasienTitle: "Input Data Pasien Baru",
+                pNamaLbl: "Nama Lengkap Warga / Pasien",
+                pNikLbl: "NIK Warga (16 Digit)",
+                pUsiaLbl: "Usia (Tahun)",
+                pTelpLbl: "No. Telp / WA",
+                pJenisLbl: "Jenis Bantuan",
+                pUrgensiLbl: "Tingkat Urgensi / Prioritas",
+                pAlamatLbl: "Alamat Lengkap Domisili",
+                pKeluhanLbl: "Deskripsi Keluhan / Kondisi",
+                btnSubmitWarga: "Kirim & Daftarkan Warga",
+                listWargaTitle: "Daftar Warga Terdaftar",
+                thWarga: "Warga / Pasien",
+                thBantuan: "Jenis Bantuan",
+                thStatus: "Status",
+                thAksi: "Aksi",
+                stat1: "Total Permohonan",
+                stat2: "Sedang Ditangani",
+                stat3: "Selesai Ditangani",
+                adminPanelTitle: "Panel Validasi & Manajemen Operasional Pasien",
+                adminPanelSub: "Ubah status, tambah catatan penanganan, atau ekspor laporan.",
+                exportCsv: "Ekspor CSV",
+                ubahFoto: "Ubah Foto",
+                verifiedBadge: "Akun Terverifikasi",
+                memberIdLabel: "ID Registrasi Anggota",
+                ktaTitle: "Kartu Tanda Anggota Resmi",
+                ktaHeader: "KARTU TANDA ANGGOTA",
+                ktaNameLbl: "Nama Lengkap",
+                ktaIdLbl: "ID Anggota",
+                ktaRoleLbl: "Peran / Jabatan",
+                ktaStatus: "Status: Aktif",
+                profileSettings: "Pengaturan & Keamanan Profil",
+                lblProfName: "Nama Lengkap",
+                lblProfTtl: "Tempat, Tanggal Lahir",
+                lblProfEmergency: "Kontak Darurat Pribadi",
+                lblProfPass: "Kata Sandi Baru (Opsional)",
+                notifLabel: "Terima Notifikasi Darurat via WhatsApp",
+                btnSaveProfile: "Simpan Perubahan",
+                footerDesc: "BAITULMAL TAZKIA merupakan salah satu lembaga zakat berbadan hukum yayasan yang menghimpun dan mengelola dana Zakat, Infaq, Shodaqoh, dan Wakaf dari masyarakat.",
+                footerCopy: "Copyright © 2026 Tazkia Baitulmal. All rights reserved.",
+                successTitle: "Berhasil!",
+                close: "Tutup"
+            },
+            en: {
+                loginSub: "Volunteer & Social Assistance Operational Portal",
+                roleLbl: "Select Role",
+                nameLbl: "Username",
+                passLbl: "Password",
+                btnSignin: "Sign In to System",
+                btnSignup: "Register New Account",
+                switchLabelIn: "Don't have an account?",
+                switchBtnIn: "Sign up now",
+                switchLabelUp: "Already have an account?",
+                switchBtnUp: "Sign in here",
+                dashTitle: "Operational Dashboard",
+                activeSession: "● Active Session",
+                relawanBannerTitle: "Citizen / Patient Registration Form",
+                relawanBannerDesc: "Register citizens or patients in need of medical treatment, evacuation, or social assistance from Tazkia Baitulmal.",
+                formPasienTitle: "Input New Patient Data",
+                pNamaLbl: "Full Name of Citizen / Patient",
+                pNikLbl: "National ID (NIK 16 Digits)",
+                pUsiaLbl: "Age (Years)",
+                pTelpLbl: "Phone / WhatsApp",
+                pJenisLbl: "Type of Assistance",
+                pUrgensiLbl: "Urgency / Priority Level",
+                pAlamatLbl: "Full Address",
+                pKeluhanLbl: "Complaint / Condition Description",
+                btnSubmitWarga: "Submit & Register Citizen",
+                listWargaTitle: "Registered Citizens List",
+                thWarga: "Citizen / Patient",
+                thBantuan: "Assistance Type",
+                thStatus: "Status",
+                thAksi: "Action",
+                stat1: "Total Requests",
+                stat2: "In Progress",
+                stat3: "Completed",
+                adminPanelTitle: "Validation Panel & Patient Management",
+                adminPanelSub: "Change status, add handling notes, or export reports.",
+                exportCsv: "Export CSV",
+                ubahFoto: "Change Photo",
+                verifiedBadge: "Verified Account",
+                memberIdLabel: "Member Registration ID",
+                ktaTitle: "Official Member ID Card",
+                ktaHeader: "MEMBER ID CARD",
+                ktaNameLbl: "Full Name",
+                ktaIdLbl: "Member ID",
+                ktaRoleLbl: "Role / Position",
+                ktaStatus: "Status: Active",
+                profileSettings: "Profile Settings & Security",
+                lblProfName: "Full Name",
+                lblProfTtl: "Place, Date of Birth",
+                lblProfEmergency: "Emergency Contact",
+                lblProfPass: "New Password (Optional)",
+                notifLabel: "Receive Emergency Notifications via WhatsApp",
+                btnSaveProfile: "Save Changes",
+                footerDesc: "BAITULMAL TAZKIA is a legal zakat institution gathering and managing Zakat, Infaq, Shodaqoh, and Waqf funds from the public.",
+                footerCopy: "Copyright © 2026 Tazkia Baitulmal. All rights reserved.",
+                successTitle: "Success!",
+                close: "Close"
             }
-        ];
+        };
 
         document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('select-lang').value = currentLang;
+            const selectDash = document.getElementById('select-lang-dash');
+            if(selectDash) selectDash.value = currentLang;
+            applyLanguage();
             checkAuthSession();
         });
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('careops_lang', lang);
+            document.getElementById('select-lang').value = lang;
+            const selectDash = document.getElementById('select-lang-dash');
+            if(selectDash) selectDash.value = lang;
+            applyLanguage();
+        }
+
+        function applyLanguage() {
+            const t = dict[currentLang];
+            
+            document.getElementById('txt-login-subtitle').innerText = t.loginSub;
+            document.getElementById('lbl-role').innerText = t.roleLbl;
+            document.getElementById('lbl-name').innerText = t.nameLbl;
+            document.getElementById('lbl-password').innerText = t.passLbl;
+            
+            const btnSubmitAuth = document.getElementById('btn-auth-submit');
+            if (authMode === 'signin') {
+                btnSubmitAuth.innerHTML = `${t.btnSignin} <i class="fa-solid fa-arrow-right ml-2"></i>`;
+                document.getElementById('txt-auth-switch-label').innerText = t.switchLabelIn;
+                document.getElementById('txt-auth-switch-btn').innerText = t.switchBtnIn;
+            } else {
+                btnSubmitAuth.innerHTML = `${t.btnSignup} <i class="fa-solid fa-user-plus ml-2"></i>`;
+                document.getElementById('txt-auth-switch-label').innerText = t.switchLabelUp;
+                document.getElementById('txt-auth-switch-btn').innerText = t.switchBtnUp;
+            }
+
+            document.getElementById('topbar-title').innerText = t.dashTitle;
+            document.getElementById('txt-active-session').innerText = t.activeSession;
+            document.getElementById('txt-relawan-banner-title').innerText = t.relawanBannerTitle;
+            document.getElementById('txt-relawan-banner-desc').innerText = t.relawanBannerDesc;
+            document.getElementById('txt-form-pasien-title').innerText = t.formPasienTitle;
+            
+            document.getElementById('lbl-p-nama').innerText = t.pNamaLbl;
+            document.getElementById('lbl-p-nik').innerText = t.pNikLbl;
+            document.getElementById('lbl-p-usia').innerText = t.pUsiaLbl;
+            document.getElementById('lbl-p-telp').innerText = t.pTelpLbl;
+            document.getElementById('lbl-p-jenis').innerText = t.pJenisLbl;
+            document.getElementById('lbl-p-urgensi').innerText = t.pUrgensiLbl;
+            document.getElementById('lbl-p-alamat').innerText = t.pAlamatLbl;
+            document.getElementById('lbl-p-keluhan').innerText = t.pKeluhanLbl;
+            document.getElementById('btn-submit-warga').innerHTML = `<i class="fa-solid fa-paper-plane mr-1"></i> ${t.btnSubmitWarga}`;
+
+            document.getElementById('txt-list-warga-title').innerText = t.listWargaTitle;
+            document.getElementById('th-warga').innerText = t.thWarga;
+            document.getElementById('th-bantuan').innerText = t.thBantuan;
+            document.getElementById('th-status').innerText = t.thStatus;
+            document.getElementById('th-aksi').innerText = t.thAksi;
+
+            document.getElementById('txt-stat-1').innerText = t.stat1;
+            document.getElementById('txt-stat-2').innerText = t.stat2;
+            document.getElementById('txt-stat-3').innerText = t.stat3;
+            document.getElementById('txt-admin-panel-title').innerText = t.adminPanelTitle;
+            document.getElementById('txt-admin-panel-sub').innerText = t.adminPanelSub;
+            document.getElementById('btn-export-csv').innerHTML = `<i class="fa-solid fa-file-excel"></i> <span>${t.exportCsv}</span>`;
+
+            document.getElementById('txt-ubah-foto').innerText = t.ubahFoto;
+            document.getElementById('txt-verified-badge').innerText = t.verifiedBadge;
+            document.getElementById('txt-member-id-label').innerText = t.memberIdLabel;
+            document.getElementById('txt-kta-title').innerText = t.ktaTitle;
+            document.getElementById('txt-kta-header').innerText = t.ktaHeader;
+            document.getElementById('txt-kta-name-lbl').innerText = t.ktaNameLbl;
+            document.getElementById('txt-kta-id-lbl').innerText = t.ktaIdLbl;
+            document.getElementById('txt-kta-role-lbl').innerText = t.ktaRoleLbl;
+            document.getElementById('txt-kta-status').innerHTML = `${t.ktaStatus.split(':')[0]}: <strong class="text-orange-400">Aktif</strong>`;
+            document.getElementById('txt-profile-settings').innerHTML = `<i class="fa-solid fa-user-pen text-orange-600 mr-2"></i> ${t.profileSettings}`;
+
+            document.getElementById('lbl-prof-name').innerText = t.lblProfName;
+            document.getElementById('lbl-prof-ttl').innerText = t.lblProfTtl;
+            document.getElementById('lbl-prof-emergency').innerText = t.lblProfEmergency;
+            document.getElementById('lbl-prof-pass').innerText = t.lblProfPass;
+            document.getElementById('txt-notif-label').innerText = t.notifLabel;
+            document.getElementById('btn-save-profile').innerText = t.btnSaveProfile;
+
+            document.getElementById('txt-footer-desc').innerText = t.footerDesc;
+            document.getElementById('txt-footer-copy').innerText = t.footerCopy;
+        }
 
         function togglePasswordVisibility() {
             const passwordInput = document.getElementById('auth-password');
@@ -648,21 +776,9 @@
             sidebar.classList.toggle('hidden');
         }
 
-        function switchAuthMode(mode) {
-            authMode = mode;
-            const tabSignin = document.getElementById('tab-signin');
-            const tabSignup = document.getElementById('tab-signup');
-            const btnSubmit = document.getElementById('btn-auth-submit');
-
-            if (mode === 'signin') {
-                tabSignin.className = "flex-1 py-2 text-xs font-semibold rounded-lg transition bg-white text-slate-800 shadow-xs";
-                tabSignup.className = "flex-1 py-2 text-xs font-semibold rounded-lg transition text-slate-500";
-                btnSubmit.innerHTML = `Masuk ke Sistem <i class="fa-solid fa-arrow-right ml-2"></i>`;
-            } else {
-                tabSignup.className = "flex-1 py-2 text-xs font-semibold rounded-lg transition bg-white text-slate-800 shadow-xs";
-                tabSignin.className = "flex-1 py-2 text-xs font-semibold rounded-lg transition text-slate-500";
-                btnSubmit.innerHTML = `Daftar Akun Baru <i class="fa-solid fa-user-plus ml-2"></i>`;
-            }
+        function toggleAuthMode() {
+            authMode = authMode === 'signin' ? 'signup' : 'signin';
+            applyLanguage();
         }
 
         function handleAuth(e) {
@@ -675,17 +791,21 @@
 
             if (authMode === 'signup') {
                 const exist = registeredAccounts.find(acc => acc.name.toLowerCase() === name.toLowerCase() && acc.role === role);
-                if(!exist) {
-                    registeredAccounts.push({ name, role, password, ttl: "-", emergency: "-", photo: "" });
-                    localStorage.setItem('careops_accounts', JSON.stringify(registeredAccounts));
+                if(exist) {
+                    showModal("Perhatian", currentLang === 'id' ? "Akun dengan nama dan peran tersebut sudah terdaftar! Silakan langsung Masuk (Sign In)." : "Account with this name and role already exists! Please Sign In.");
+                    return;
                 }
-                showModal("Berhasil!", "Akun berhasil didaftarkan! Silakan masuk.");
-                switchAuthMode('signin');
+                registeredAccounts.push({ name, role, password, ttl: "-", emergency: "-", photo: "" });
+                localStorage.setItem('careops_accounts', JSON.stringify(registeredAccounts));
+                
+                showModal("Berhasil!", currentLang === 'id' ? "Akun berhasil didaftarkan! Silakan masuk." : "Account successfully registered! Please sign in.");
+                authMode = 'signin';
+                applyLanguage();
                 return;
             } else {
                 const found = registeredAccounts.find(acc => acc.name.toLowerCase() === name.toLowerCase() && acc.role === role && acc.password === password);
                 if (!found) {
-                    showModal("Gagal Masuk", "Nama, peran, atau kata sandi salah! Periksa kembali atau gunakan akun default (Relawan: Ahmad / 123, Admin: Admin Utama / 123).");
+                    showModal("Gagal Masuk", currentLang === 'id' ? "Nama, peran, atau kata sandi salah! Jika belum punya akun, silakan daftar terlebih dahulu di bawah." : "Incorrect credentials! If you don't have an account, please sign up below.");
                     return;
                 }
             }
@@ -719,7 +839,6 @@
                 document.getElementById('sidebar-user-name').innerText = currentUser.name;
                 
                 const badge = document.getElementById('sidebar-role-badge');
-                
                 renderSidebarMenu();
                 updateGlobalAvatar();
 
@@ -729,7 +848,7 @@
                     document.getElementById('view-admin').classList.remove('hidden');
                     document.getElementById('view-relawan').classList.add('hidden');
                 } else {
-                    badge.innerText = 'Relawan';
+                    badge.innerText = currentLang === 'id' ? 'Relawan' : 'Volunteer';
                     badge.className = 'text-[9px] px-2 py-0.5 rounded font-semibold bg-orange-500/20 text-orange-300';
                     document.getElementById('view-relawan').classList.remove('hidden');
                     document.getElementById('view-admin').classList.add('hidden');
@@ -747,32 +866,28 @@
             if (isAdmin) {
                 container.innerHTML = `
                     <div>
-                        <p class="px-3 font-bold text-slate-500 uppercase tracking-wider mb-2">Menu Utama</p>
+                        <p class="px-3 font-bold text-slate-500 uppercase tracking-wider mb-2">${currentLang === 'id' ? 'Menu Utama' : 'Main Menu'}</p>
                         <div class="space-y-1">
                             <button onclick="switchTab('dashboard')" id="sidebar-tab-dashboard" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition text-slate-400 hover:bg-slate-800 hover:text-white">
-                                <span class="flex items-center space-x-3"><i class="fa-solid fa-chart-pie w-4 text-center text-sm"></i><span>Dashboard Kasus</span></span>
+                                <span class="flex items-center space-x-3"><i class="fa-solid fa-chart-pie w-4 text-center text-sm"></i><span>${currentLang === 'id' ? 'Dashboard Kasus' : 'Case Dashboard'}</span></span>
                             </button>
                         </div>
                     </div>
                     <div>
-                        <p class="px-3 font-bold text-slate-500 uppercase tracking-wider mb-2">Manajemen & Validasi</p>
+                        <p class="px-3 font-bold text-slate-500 uppercase tracking-wider mb-2">${currentLang === 'id' ? 'Manajemen & Validasi' : 'Management & Validation'}</p>
                         <div class="space-y-1">
                             <button onclick="switchTab('dashboard')" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition text-slate-400 hover:bg-slate-800 hover:text-white">
-                                <span class="flex items-center space-x-3"><i class="fa-solid fa-list-check w-4 text-center text-sm"></i><span>Validasi Data Warga</span></span>
-                                <span id="badge-total-warga" class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full text-[10px] font-bold">1</span>
-                            </button>
-                            <button onclick="exportToCSV()" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl font-medium transition text-slate-400 hover:bg-slate-800 hover:text-white text-left">
-                                <i class="fa-solid fa-file-excel w-4 text-center text-sm text-orange-400"></i>
-                                <span>Ekspor Laporan CSV</span>
+                                <span class="flex items-center space-x-3"><i class="fa-solid fa-list-check w-4 text-center text-sm"></i><span>${currentLang === 'id' ? 'Validasi Data Warga' : 'Citizen Data Validation'}</span></span>
+                                <span id="badge-total-warga" class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full text-[10px] font-bold">0</span>
                             </button>
                         </div>
                     </div>
                     <div>
-                        <p class="px-3 font-bold text-slate-500 uppercase tracking-wider mb-2">Pengaturan Akun</p>
+                        <p class="px-3 font-bold text-slate-500 uppercase tracking-wider mb-2">${currentLang === 'id' ? 'Pengaturan Akun' : 'Account Settings'}</p>
                         <div class="space-y-1">
                             <button onclick="switchTab('profil')" id="sidebar-tab-profil" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl font-medium transition text-slate-400 hover:bg-slate-800 hover:text-white">
                                 <i class="fa-solid fa-id-badge w-4 text-center text-sm"></i>
-                                <span>Profil & KTA Digital</span>
+                                <span>${currentLang === 'id' ? 'Profil & KTA Digital' : 'Profile & Digital ID'}</span>
                             </button>
                         </div>
                     </div>
@@ -780,28 +895,28 @@
             } else {
                 container.innerHTML = `
                     <div>
-                        <p class="px-3 font-bold text-slate-500 uppercase tracking-wider mb-2">Menu Relawan</p>
+                        <p class="px-3 font-bold text-slate-500 uppercase tracking-wider mb-2">${currentLang === 'id' ? 'Menu Relawan' : 'Volunteer Menu'}</p>
                         <div class="space-y-1">
                             <button onclick="switchTab('dashboard')" id="sidebar-tab-dashboard" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition text-slate-400 hover:bg-slate-800 hover:text-white">
-                                <span class="flex items-center space-x-3"><i class="fa-solid fa-user-plus w-4 text-center text-sm"></i><span>Input Data Warga</span></span>
+                                <span class="flex items-center space-x-3"><i class="fa-solid fa-user-plus w-4 text-center text-sm"></i><span>${currentLang === 'id' ? 'Input Data Warga' : 'Input Citizen Data'}</span></span>
                             </button>
                         </div>
                     </div>
                     <div>
-                        <p class="px-3 font-bold text-slate-500 uppercase tracking-wider mb-2">Aktivitas Lapangan</p>
+                        <p class="px-3 font-bold text-slate-500 uppercase tracking-wider mb-2">${currentLang === 'id' ? 'Aktivitas Lapangan' : 'Field Activity'}</p>
                         <div class="space-y-1">
                             <button onclick="switchTab('dashboard')" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition text-slate-400 hover:bg-slate-800 hover:text-white">
-                                <span class="flex items-center space-x-3"><i class="fa-solid fa-clipboard-list w-4 text-center text-sm"></i><span>Warga Saya Catat</span></span>
-                                <span id="badge-total-warga" class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full text-[10px] font-bold">1</span>
+                                <span class="flex items-center space-x-3"><i class="fa-solid fa-clipboard-list w-4 text-center text-sm"></i><span>${currentLang === 'id' ? 'Warga Saya Catat' : 'My Recorded Citizens'}</span></span>
+                                <span id="badge-total-warga" class="bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full text-[10px] font-bold">0</span>
                             </button>
                         </div>
                     </div>
                     <div>
-                        <p class="px-3 font-bold text-slate-500 uppercase tracking-wider mb-2">Pengaturan Akun</p>
+                        <p class="px-3 font-bold text-slate-500 uppercase tracking-wider mb-2">${currentLang === 'id' ? 'Pengaturan Akun' : 'Account Settings'}</p>
                         <div class="space-y-1">
                             <button onclick="switchTab('profil')" id="sidebar-tab-profil" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl font-medium transition text-slate-400 hover:bg-slate-800 hover:text-white">
                                 <i class="fa-solid fa-id-badge w-4 text-center text-sm"></i>
-                                <span>Profil & KTA Digital</span>
+                                <span>${currentLang === 'id' ? 'Profil & KTA Digital' : 'Profile & Digital ID'}</span>
                             </button>
                         </div>
                     </div>
@@ -824,14 +939,14 @@
                 contentProfil.classList.add('hidden');
                 if(btnDash) btnDash.className = "w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition bg-orange-600 text-white shadow-sm";
                 if(btnProf) btnProf.className = "w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl font-medium transition text-slate-400 hover:bg-slate-800 hover:text-white";
-                topbarTitle.innerText = currentUser.role === 'admin' ? "Dashboard Operasional Kasus" : "Formulir & Rekap Data Lapangan";
+                topbarTitle.innerText = currentUser.role === 'admin' ? (currentLang === 'id' ? "Dashboard Operasional Kasus" : "Case Operational Dashboard") : (currentLang === 'id' ? "Formulir & Rekap Data Lapangan" : "Field Data Form & Recapitulation");
                 renderDashboard();
             } else {
                 contentDashboard.classList.add('hidden');
                 contentProfil.classList.remove('hidden');
                 if(btnProf) btnProf.className = "w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium transition bg-orange-600 text-white shadow-sm";
                 if(btnDash) btnDash.className = "w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl font-medium transition text-slate-400 hover:bg-slate-800 hover:text-white";
-                topbarTitle.innerText = "Profil & KTA Digital Pengguna";
+                topbarTitle.innerText = currentLang === 'id' ? "Profil & KTA Digital Pengguna" : "Profile & Digital Member ID";
                 renderProfileData();
             }
         }
@@ -845,7 +960,7 @@
             const acc = registeredAccounts.find(a => a.name.toLowerCase() === currentUser.name.toLowerCase() && a.role === currentUser.role) || { ttl: '', emergency: '', photo: '' };
             
             document.getElementById('profile-display-name').innerText = currentUser.name;
-            document.getElementById('profile-display-role').innerText = currentUser.role === 'admin' ? 'Administrator Utama' : 'Relawan Lapangan';
+            document.getElementById('profile-display-role').innerText = currentUser.role === 'admin' ? (currentLang === 'id' ? 'Administrator Utama' : 'Chief Administrator') : (currentLang === 'id' ? 'Relawan Lapangan' : 'Field Volunteer');
             
             document.getElementById('kta-name').innerText = currentUser.name;
             document.getElementById('kta-role').innerText = currentUser.role;
@@ -853,9 +968,6 @@
             document.getElementById('prof-input-name').value = currentUser.name;
             document.getElementById('prof-input-ttl').value = acc.ttl || '';
             document.getElementById('prof-input-emergency').value = acc.emergency || '';
-
-            const totalInput = listPasien.filter(p => p.relawan.includes(currentUser.name)).length;
-            document.getElementById('stat-profile-input').innerText = totalInput;
 
             updateGlobalAvatar();
         }
@@ -885,15 +997,13 @@
             const reader = new FileReader();
             reader.onload = function(uploadEvent) {
                 const base64Image = uploadEvent.target.result;
-
                 const idx = registeredAccounts.findIndex(a => a.name.toLowerCase() === currentUser.name.toLowerCase() && a.role === currentUser.role);
                 if (idx !== -1) {
                     registeredAccounts[idx].photo = base64Image;
                     localStorage.setItem('careops_accounts', JSON.stringify(registeredAccounts));
                 }
-
                 updateGlobalAvatar();
-                showModal("Foto Diperbarui!", "Foto profil Anda berhasil diganti.");
+                showModal("Berhasil!", currentLang === 'id' ? "Foto profil berhasil diganti." : "Profile photo successfully updated.");
             };
             reader.readAsDataURL(file);
             e.target.value = '';
@@ -911,7 +1021,6 @@
             if (photoUrl) {
                 if(profileImg) { profileImg.src = photoUrl; profileImg.classList.remove('hidden'); }
                 if(profileIcon) { profileIcon.classList.add('hidden'); }
-
                 if(ktaImg) { ktaImg.src = photoUrl; ktaImg.classList.remove('hidden'); }
                 if(ktaIcon) { ktaIcon.classList.add('hidden'); }
 
@@ -925,7 +1034,6 @@
             } else {
                 if(profileImg) profileImg.classList.add('hidden');
                 if(profileIcon) profileIcon.classList.remove('hidden');
-
                 if(ktaImg) ktaImg.classList.add('hidden');
                 if(ktaIcon) ktaIcon.classList.remove('hidden');
 
@@ -956,7 +1064,7 @@
             document.getElementById('sidebar-user-name').innerText = newName;
             
             renderProfileData();
-            showModal("Berhasil!", "Profil Anda berhasil diperbarui.");
+            showModal("Berhasil!", currentLang === 'id' ? "Profil berhasil diperbarui." : "Profile successfully updated.");
         }
 
         function handleTambahPasien(e) {
@@ -982,7 +1090,7 @@
                 alamat,
                 keluhan,
                 status: "Menunggu Verifikasi",
-                relawan: `${currentUser.name} (Relawan)`,
+                relawan: `${currentUser.name} (${currentUser.role})`,
                 catatan: "-"
             };
 
@@ -992,7 +1100,7 @@
 
             document.getElementById('form-pasien').reset();
             renderDashboard();
-            showModal("Berhasil!", "Berhasil menambahkan data warga");
+            showModal("Berhasil!", currentLang === 'id' ? "Berhasil menambahkan data warga" : "Successfully added citizen data");
         }
 
         function hapusPasien(id) {
@@ -1000,7 +1108,7 @@
             saveDataToLocalStorage();
             updateBadgeCount();
             renderDashboard();
-            showModal("Berhasil Dihapus", "Data warga berhasil dihapus dari sistem");
+            showModal("Berhasil", currentLang === 'id' ? "Data warga berhasil dihapus" : "Citizen data successfully deleted");
         }
 
         function updateStatusPasien(id, statusBaru) {
@@ -1026,21 +1134,17 @@
 
             const content = `
                 <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-xl mb-3">
-                    <div><span class="text-xs text-slate-400 block">Nama Warga</span><strong>${p.nama} (${p.usia} thn)</strong></div>
+                    <div><span class="text-xs text-slate-400 block">${currentLang === 'id' ? 'Nama Warga' : 'Citizen Name'}</span><strong>${p.nama} (${p.usia} thn)</strong></div>
                     <div><span class="text-xs text-slate-400 block">NIK</span><strong>${p.nik || '-'}</strong></div>
                 </div>
                 <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-xl mb-3">
-                    <div><span class="text-xs text-slate-400 block">No. Telepon / WA</span><strong>${p.telp}</strong></div>
-                    <div><span class="text-xs text-slate-400 block">Urgensi</span><span class="font-semibold text-xs">${p.urgensi || 'Normal'}</span></div>
+                    <div><span class="text-xs text-slate-400 block">${currentLang === 'id' ? 'No. Telepon / WA' : 'Phone / WA'}</span><strong>${p.telp}</strong></div>
+                    <div><span class="text-xs text-slate-400 block">${currentLang === 'id' ? 'Urgensi' : 'Urgency'}</span><span class="font-semibold text-xs">${p.urgensi || 'Normal'}</span></div>
                 </div>
                 <div class="space-y-2">
-                    <div><span class="text-xs text-slate-400 block">Jenis Bantuan</span><span class="font-medium text-orange-700">${p.jenis}</span></div>
-                    <div><span class="text-xs text-slate-400 block">Alamat Domisili</span><p class="text-slate-600">${p.alamat}</p></div>
-                    <div><span class="text-xs text-slate-400 block">Keluhan / Kondisi</span><p class="text-slate-600">${p.keluhan}</p></div>
-                    <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
-                        <div><span class="text-xs text-slate-400 block">Status Penanganan</span><span class="text-xs font-semibold px-2 py-0.5 rounded-full ${getStatusBadgeClass(p.status)}">${p.status}</span></div>
-                        <div><span class="text-xs text-slate-400 block">Relawan Pencatat</span><span class="text-slate-600">${p.relawan}</span></div>
-                    </div>
+                    <div><span class="text-xs text-slate-400 block">${currentLang === 'id' ? 'Jenis Bantuan' : 'Assistance Type'}</span><span class="font-medium text-orange-700">${p.jenis}</span></div>
+                    <div><span class="text-xs text-slate-400 block">${currentLang === 'id' ? 'Alamat Domisili' : 'Address'}</span><p class="text-slate-600">${p.alamat}</p></div>
+                    <div><span class="text-xs text-slate-400 block">${currentLang === 'id' ? 'Keluhan / Kondisi' : 'Condition'}</span><p class="text-slate-600">${p.keluhan}</p></div>
                 </div>
             `;
             document.getElementById('detail-content').innerHTML = content;
@@ -1097,15 +1201,15 @@
                             </span>
                         </td>
                         <td class="py-3 px-3 text-center space-x-1">
-                            <button onclick="showDetail(${p.id})" class="bg-blue-50 hover:bg-blue-100 text-blue-600 px-2.5 py-1.5 rounded-lg text-xs font-medium transition" title="Lihat Detail">
+                            <button onclick="showDetail(${p.id})" class="bg-blue-50 hover:bg-blue-100 text-blue-600 px-2.5 py-1.5 rounded-lg text-xs font-medium transition" title="Detail">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
-                            <button onclick="hapusPasien(${p.id})" class="bg-rose-50 hover:bg-rose-100 text-rose-600 px-2.5 py-1.5 rounded-lg text-xs font-medium transition" title="Hapus Data">
+                            <button onclick="hapusPasien(${p.id})" class="bg-rose-50 hover:bg-rose-100 text-rose-600 px-2.5 py-1.5 rounded-lg text-xs font-medium transition" title="Hapus">
                                 <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </td>
                     </tr>
-                `).join('') || `<tr><td colspan="4" class="text-center py-6 text-slate-400">Tidak ada data warga yang cocok.</td></tr>`;
+                `).join('') || `<tr><td colspan="4" class="text-center py-6 text-slate-400">${currentLang === 'id' ? 'Tidak ada data warga.' : 'No citizen data found.'}</td></tr>`;
             }
 
             if (currentUser && currentUser.role === 'admin') {
@@ -1113,12 +1217,9 @@
                 const proses = listPasien.filter(p => p.status === 'Sedang Ditangani' || p.status === 'Menunggu Verifikasi').length;
                 const selesai = listPasien.filter(p => p.status === 'Selesai').length;
 
-                const statTotal = document.getElementById('stat-total');
-                const statProses = document.getElementById('stat-proses');
-                const statSelesai = document.getElementById('stat-selesai');
-                if(statTotal) statTotal.innerText = total;
-                if(statProses) statProses.innerText = proses;
-                if(statSelesai) statSelesai.innerText = selesai;
+                document.getElementById('stat-total').innerText = total;
+                document.getElementById('stat-proses').innerText = proses;
+                document.getElementById('stat-selesai').innerText = selesai;
 
                 const searchAdminInput = document.getElementById('search-admin');
                 const filterAdminSelect = document.getElementById('filter-status-admin');
@@ -1148,7 +1249,7 @@
                                 <span class="text-xs font-semibold px-2 py-0.5 rounded ${getUrgencyBadgeClass(p.urgensi)} inline-block mt-0.5">${p.urgensi || 'Normal'}</span>
                             </td>
                             <td class="py-3 px-3">
-                                <input type="text" value="${p.catatan || ''}" onchange="updateCatatanPasien(${p.id}, this.value)" placeholder="Tulis catatan..." class="text-xs px-2.5 py-1.5 rounded border border-slate-300 w-full focus:outline-none focus:ring-1 focus:ring-orange-500">
+                                <input type="text" value="${p.catatan || ''}" onchange="updateCatatanPasien(${p.id}, this.value)" placeholder="Catatan..." class="text-xs px-2.5 py-1.5 rounded border border-slate-300 w-full focus:outline-none focus:ring-1 focus:ring-orange-500">
                             </td>
                             <td class="py-3 px-3">
                                 <span class="px-2.5 py-1 text-xs font-semibold rounded-full ${getStatusBadgeClass(p.status)}">
@@ -1169,7 +1270,7 @@
                                 </button>
                             </td>
                         </tr>
-                    `).join('') || `<tr><td colspan="6" class="text-center py-6 text-slate-400">Tidak ada permohonan yang cocok.</td></tr>`;
+                    `).join('') || `<tr><td colspan="6" class="text-center py-6 text-slate-400">${currentLang === 'id' ? 'Tidak ada permohonan.' : 'No requests found.'}</td></tr>`;
                 }
             }
         }
@@ -1177,6 +1278,7 @@
         function showModal(title, message) {
             document.getElementById('modal-title').innerText = title;
             document.getElementById('modal-message').innerText = message;
+            document.getElementById('modal-btn-close').innerText = dict[currentLang].close;
             document.getElementById('custom-modal').classList.remove('hidden');
         }
 
