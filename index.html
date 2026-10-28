@@ -175,7 +175,7 @@
                     </div>
                     <div class="text-[9px] text-slate-500 text-center pt-1 border-t border-slate-800/60 flex justify-between">
                         <span>Tazkia Baitulmal</span>
-                        <span class="text-orange-500 font-mono">● Secure</span>
+                        <span id="txt-secure-label" class="text-orange-500 font-mono">● Secure</span>
                     </div>
                 </div>
             </aside>
@@ -539,9 +539,8 @@
                         </div>
                     </div>
                     
-                    <div class="max-w-7xl mx-auto pt-6 flex flex-col sm:flex-row items-center justify-between text-slate-500 text-[11px] relative">
-                        <p id="txt-footer-copy">Copyright &copy; 2026 Tazkia Baitulmal. All rights reserved.</p>
-                        <p class="text-slate-400">Powered by <a href="#" class="text-orange-400 hover:underline">Paybill.id</a></p>
+                    <div class="max-w-7xl mx-auto pt-6 flex flex-col sm:flex-row items-center justify-center text-slate-500 text-[11px] relative">
+                        <p id="txt-footer-copy" class="text-center">Copyright &copy; 2026 Tazkia Baitulmal. All rights reserved.</p>
                         <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="absolute right-0 mt-4 sm:mt-0 w-10 h-10 bg-orange-600 hover:bg-orange-700 text-white rounded-xl flex items-center justify-center shadow-md transition" title="Kembali ke atas">
                             <i class="fa-solid fa-arrow-up text-sm"></i>
                         </button>
@@ -552,7 +551,7 @@
 
     </div>
 
-    <!-- JAVASCRIPT LOGIC DENGAN DUAL BAHASA LENGKAP -->
+    <!-- SCRIPT JAVASCRIPT -->
     <script>
         let currentLang = localStorage.getItem('careops_lang') || 'id';
         let currentUser = JSON.parse(localStorage.getItem('careops_user')) || null;
@@ -577,6 +576,7 @@
                 switchBtnUp: "Masuk di sini",
                 dashTitle: "Dashboard Operasional",
                 activeSession: "● Sesi Aktif",
+                secureLabel: "● Secure",
                 relawanBannerTitle: "Formulir Pendaftaran Warga / Pasien",
                 relawanBannerDesc: "Daftarkan warga atau pasien yang membutuhkan bantuan pengobatan medis, evakuasi, atau bantuan sosial operasional Tazkia Baitulmal.",
                 formPasienTitle: "Input Data Pasien Baru",
@@ -585,6 +585,7 @@
                 pUsiaLbl: "Usia (Tahun)",
                 pTelpLbl: "No. Telp / WA",
                 pJenisLbl: "Jenis Bantuan",
+                pJenisPlaceholder: "Misal: Pengobatan Medis",
                 pUrgensiLbl: "Tingkat Urgensi / Prioritas",
                 optUrg1: "🔴 Tinggi (Butuh Evakuasi/Mendesak)",
                 optUrg2: "🟡 Sedang (Pengobatan/Rawat Jalan)",
@@ -602,6 +603,7 @@
                 thBantuan: "Jenis Bantuan",
                 thStatus: "Status",
                 thAksi: "Aksi",
+                emptyCitizen: "Tidak ada data warga.",
                 stat1: "Total Permohonan",
                 stat2: "Sedang Ditangani",
                 stat3: "Selesai Ditangani",
@@ -624,7 +626,7 @@
                 lblProfPass: "Kata Sandi Baru (Opsional)",
                 notifLabel: "Terima Notifikasi Darurat via WhatsApp",
                 btnSaveProfile: "Simpan Perubahan",
-                footerDesc: "BAITULMAL TAZKIA merupakan salah satu lembaga zakat berbadan hukum yayasan yang menghimpun dan mengelola dana Zakat, Infaq, Shodaqoh, dan Wakaf dari masyarakat yang bertujuan untuk meningkatkan kualitas hidup kaum dhuafa/mustahik menuju ummat yang berdaya.",
+                footerDesc: "BAITULMAL TAZKIA merupakan salah satu lembaga zakat berbadan hukum yayasan yang menghimpun dan mengelola dana Zakat,Infaq,Shodaqoh, dan Wakaf dari masyarakat yang bertujuan untuk meningkatkan kualitas hidup kaum dhuafa/mustahik menuju ummat yang berdaya.",
                 footerProg: "Program",
                 footerLink: "Tautan",
                 footerContact: "Kontak",
@@ -647,6 +649,7 @@
                 switchBtnUp: "Sign in here",
                 dashTitle: "Operational Dashboard",
                 activeSession: "● Active Session",
+                secureLabel: "● Secure",
                 relawanBannerTitle: "Citizen / Patient Registration Form",
                 relawanBannerDesc: "Register citizens or patients in need of medical treatment, evacuation, or social assistance from Tazkia Baitulmal.",
                 formPasienTitle: "Input New Patient Data",
@@ -655,6 +658,7 @@
                 pUsiaLbl: "Age (Years)",
                 pTelpLbl: "Phone / WhatsApp",
                 pJenisLbl: "Type of Assistance",
+                pJenisPlaceholder: "e.g. Medical Treatment",
                 pUrgensiLbl: "Urgency / Priority Level",
                 optUrg1: "🔴 High (Needs Evacuation/Urgent)",
                 optUrg2: "🟡 Medium (Treatment/Outpatient)",
@@ -672,6 +676,7 @@
                 thBantuan: "Assistance Type",
                 thStatus: "Status",
                 thAksi: "Action",
+                emptyCitizen: "No citizen data found.",
                 stat1: "Total Requests",
                 stat2: "In Progress",
                 stat3: "Completed",
@@ -694,7 +699,7 @@
                 lblProfPass: "New Password (Optional)",
                 notifLabel: "Receive Emergency Notifications via WhatsApp",
                 btnSaveProfile: "Save Changes",
-                footerDesc: "BAITULMAL TAZKIA is a legal zakat institution gathering and managing Zakat, Infaq, Shodaqoh, and Waqf funds from the public to improve the quality of life of mustahik towards an empowered ummah.",
+                footerDesc: "BAITULMAL TAZKIA merupakan salah satu lembaga zakat berbadan hukum yayasan yang menghimpun dan mengelola dana Zakat,Infaq,Shodaqoh, dan Wakaf dari masyarakat yang bertujuan untuk meningkatkan kualitas hidup kaum dhuafa/mustahik menuju ummat yang berdaya.",
                 footerProg: "Programs",
                 footerLink: "Links",
                 footerContact: "Contact",
@@ -719,7 +724,11 @@
             const selectDash = document.getElementById('select-lang-dash');
             if(selectDash) selectDash.value = lang;
             applyLanguage();
-            if(currentUser) renderSidebarMenu();
+            if(currentUser) {
+                renderSidebarMenu();
+                renderDashboard();
+                renderProfileData();
+            }
         }
 
         function applyLanguage() {
@@ -745,6 +754,7 @@
 
             document.getElementById('topbar-title').innerText = t.dashTitle;
             document.getElementById('txt-active-session').innerText = t.activeSession;
+            document.getElementById('txt-secure-label').innerText = t.secureLabel;
             document.getElementById('txt-relawan-banner-title').innerText = t.relawanBannerTitle;
             document.getElementById('txt-relawan-banner-desc').innerText = t.relawanBannerDesc;
             document.getElementById('txt-form-pasien-title').innerText = t.formPasienTitle;
@@ -754,6 +764,7 @@
             document.getElementById('lbl-p-usia').innerText = t.pUsiaLbl;
             document.getElementById('lbl-p-telp').innerText = t.pTelpLbl;
             document.getElementById('lbl-p-jenis').innerText = t.pJenisLbl;
+            document.getElementById('p-jenis').placeholder = t.pJenisPlaceholder;
             document.getElementById('lbl-p-urgensi').innerText = t.pUrgensiLbl;
             document.getElementById('opt-urgensi-1').innerText = t.optUrg1;
             document.getElementById('opt-urgensi-2').innerText = t.optUrg2;
@@ -888,7 +899,7 @@
                 updateGlobalAvatar();
 
                 if (currentUser.role === 'admin') {
-                    badge.innerText = currentLang === 'id' ? 'Administrator' : 'Administrator';
+                    badge.innerText = 'Administrator';
                     badge.className = 'text-[9px] px-2 py-0.5 rounded font-semibold bg-purple-500/20 text-purple-300';
                     document.getElementById('view-admin').classList.remove('hidden');
                     document.getElementById('view-relawan').classList.add('hidden');
@@ -1008,7 +1019,7 @@
             document.getElementById('profile-display-role').innerText = currentUser.role === 'admin' ? (currentLang === 'id' ? 'Administrator Utama' : 'Chief Administrator') : (currentLang === 'id' ? 'Relawan Lapangan' : 'Field Volunteer');
             
             document.getElementById('kta-name').innerText = currentUser.name;
-            document.getElementById('kta-role').innerText = currentUser.role;
+            document.getElementById('kta-role').innerText = currentUser.role === 'admin' ? (currentLang === 'id' ? 'Administrator' : 'Administrator') : (currentLang === 'id' ? 'Relawan' : 'Volunteer');
 
             document.getElementById('prof-input-name').value = currentUser.name;
             document.getElementById('prof-input-ttl').value = acc.ttl || '';
@@ -1248,7 +1259,7 @@
                             <button onclick="hapusPasien(${p.id})" class="bg-rose-50 hover:bg-rose-100 text-rose-600 px-2.5 py-1.5 rounded-lg text-xs font-medium transition" title="Hapus"><i class="fa-solid fa-trash-can"></i></button>
                         </td>
                     </tr>
-                `).join('') || `<tr><td colspan="4" class="text-center py-6 text-slate-400">${currentLang === 'id' ? 'Tidak ada data warga.' : 'No citizen data found.'}</td></tr>`;
+                `).join('') || `<tr><td colspan="4" class="text-center py-6 text-slate-400">${dict[currentLang].emptyCitizen}</td></tr>`;
             }
 
             if (currentUser && currentUser.role === 'admin') {
