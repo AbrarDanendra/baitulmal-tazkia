@@ -52,10 +52,10 @@
             </div>
             <div class="space-y-2 pt-2">
                 <button onclick="bukaKameraLangsung()" id="txt-btn-kamera" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium py-2.5 rounded-xl text-xs transition flex items-center justify-center space-x-2 shadow-sm">
-                    <i class="fa-solid fa-camera"></i> <span>Ambil Foto Sekarang (Kamera)</span>
+                    <i class="fa-solid fa-camera"></i> <span id="txt-span-kamera">Ambil Foto Sekarang (Kamera)</span>
                 </button>
                 <button onclick="bukaGaleriFile()" id="txt-btn-galeri" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium py-2.5 rounded-xl text-xs transition flex items-center justify-center space-x-2">
-                    <i class="fa-solid fa-images"></i> <span>Pilih dari Galeri / File</span>
+                    <i class="fa-solid fa-images"></i> <span id="txt-span-galeri">Pilih dari Galeri / File</span>
                 </button>
             </div>
             <div class="pt-2 border-t border-slate-100">
@@ -343,10 +343,10 @@
                                     <div class="flex flex-wrap items-center gap-2">
                                         <input type="text" id="search-admin" oninput="renderDashboard()" placeholder="Cari..." class="text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-1 focus:ring-orange-500">
                                         <select id="filter-status-admin" onchange="renderDashboard()" class="text-xs px-2 py-2 rounded-lg border border-slate-300 bg-white focus:outline-none">
-                                            <option value="">Semua Status</option>
-                                            <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
-                                            <option value="Sedang Ditangani">Sedang Ditangani</option>
-                                            <option value="Selesai">Selesai</option>
+                                            <option value="" id="opt-admin-filter-all">Semua Status</option>
+                                            <option value="Menunggu Verifikasi" id="opt-admin-filter-wait">Menunggu Verifikasi</option>
+                                            <option value="Sedang Ditangani" id="opt-admin-filter-proc">Sedang Ditangani</option>
+                                            <option value="Selesai" id="opt-admin-filter-done">Selesai</option>
                                         </select>
                                         <button onclick="exportToCSV()" id="btn-export-csv" class="bg-orange-50 hover:bg-orange-100 text-orange-800 px-3 py-2 rounded-lg text-xs font-medium transition flex items-center space-x-1">
                                             <i class="fa-solid fa-file-excel"></i> <span>Ekspor CSV</span>
@@ -477,7 +477,7 @@
                                             </div>
                                             <div>
                                                 <label id="lbl-prof-pass" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Kata Sandi Baru (Opsional)</label>
-                                                <input type="password" id="prof-input-password" id="prof-input-pass-field" placeholder="Kosongkan jika tidak diubah" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
+                                                <input type="password" id="prof-input-password" placeholder="Kosongkan jika tidak diubah" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
                                             </div>
                                         </div>
                                         <div class="flex items-center justify-between pt-2">
@@ -595,6 +595,7 @@
                 btnSubmitWarga: "Kirim & Daftarkan Warga",
                 listWargaTitle: "Daftar Warga Terdaftar",
                 searchPlaceholder: "Cari nama...",
+                searchAdminPlaceholder: "Cari...",
                 optFilterAll: "Semua Status",
                 optFilterWait: "Menunggu Verifikasi",
                 optFilterProc: "Sedang Ditangani",
@@ -603,7 +604,14 @@
                 thBantuan: "Jenis Bantuan",
                 thStatus: "Status",
                 thAksi: "Aksi",
+                thAdminWarga: "Warga / Pasien",
+                thAdminKontak: "Kontak & Alamat",
+                thAdminJenis: "Jenis & Urgensi",
+                thAdminCatatan: "Catatan Admin / Progres",
+                thAdminStatus: "Status",
+                thAdminAksi: "Aksi",
                 emptyCitizen: "Tidak ada data warga.",
+                emptyRequest: "Tidak ada permohonan.",
                 stat1: "Total Permohonan",
                 stat2: "Sedang Ditangani",
                 stat3: "Selesai Ditangani",
@@ -611,6 +619,9 @@
                 adminPanelSub: "Ubah status, tambah catatan penanganan, atau ekspor laporan.",
                 exportCsv: "Ekspor CSV",
                 ubahFoto: "Ubah Foto",
+                spanKamera: "Ambil Foto Sekarang (Kamera)",
+                spanGaleri: "Pilih dari Galeri / File",
+                modalBatal: "Batal",
                 verifiedBadge: "Akun Terverifikasi",
                 memberIdLabel: "ID Registrasi Anggota",
                 ktaTitle: "Kartu Tanda Anggota Resmi",
@@ -618,7 +629,6 @@
                 ktaNameLbl: "Nama Lengkap",
                 ktaIdLbl: "ID Anggota",
                 ktaRoleLbl: "Peran / Jabatan",
-                ktaStatus: "Status: Aktif",
                 ktaStatusVal: "Aktif",
                 profileSettings: "Pengaturan & Keamanan Profil",
                 lblProfName: "Nama Lengkap",
@@ -639,10 +649,20 @@
                 linkTentang: "Tentang Kami",
                 footerContact: "Kontak",
                 footerCopy: "Copyright © 2026 Tazkia Baitulmal. All rights reserved.",
-                successTitle: "Berhasil!",
                 close: "Tutup",
                 roleAdmin: "Administrator",
-                roleRelawan: "Relawan"
+                roleRelawan: "Relawan",
+                msgSuccessTitle: "Berhasil!",
+                msgSuccessText: "Berhasil memperbarui data sistem",
+                msgAddCitizen: "Berhasil menambahkan data warga",
+                msgDelCitizen: "Data warga berhasil dihapus",
+                msgProfileUpdated: "Profil berhasil diperbarui.",
+                msgPhotoUpdated: "Foto profil berhasil diganti.",
+                msgAccountExists: "Akun sudah terdaftar! Silakan masuk.",
+                msgAccountSuccess: "Akun berhasil didaftarkan! Silakan masuk.",
+                msgLoginErrorTitle: "Gagal Masuk",
+                msgLoginErrorText: "Nama, peran, atau kata sandi salah! Daftarkan akun terlebih dahulu jika belum punya.",
+                msgWarningTitle: "Perhatian"
             },
             en: {
                 loginSub: "Volunteer & Social Assistance Operational Portal",
@@ -678,6 +698,7 @@
                 btnSubmitWarga: "Submit & Register Citizen",
                 listWargaTitle: "Registered Citizens List",
                 searchPlaceholder: "Search name...",
+                searchAdminPlaceholder: "Search...",
                 optFilterAll: "All Status",
                 optFilterWait: "Waiting for Verification",
                 optFilterProc: "In Progress",
@@ -686,7 +707,14 @@
                 thBantuan: "Assistance Type",
                 thStatus: "Status",
                 thAksi: "Action",
+                thAdminWarga: "Citizen / Patient",
+                thAdminKontak: "Contact & Address",
+                thAdminJenis: "Type & Urgency",
+                thAdminCatatan: "Admin Notes / Progress",
+                thAdminStatus: "Status",
+                thAdminAksi: "Action",
                 emptyCitizen: "No citizen data found.",
+                emptyRequest: "No requests found.",
                 stat1: "Total Requests",
                 stat2: "In Progress",
                 stat3: "Completed",
@@ -694,6 +722,9 @@
                 adminPanelSub: "Change status, add handling notes, or export reports.",
                 exportCsv: "Export CSV",
                 ubahFoto: "Change Photo",
+                spanKamera: "Take Photo Now (Camera)",
+                spanGaleri: "Choose from Gallery / File",
+                modalBatal: "Cancel",
                 verifiedBadge: "Verified Account",
                 memberIdLabel: "Member Registration ID",
                 ktaTitle: "Official Member ID Card",
@@ -701,7 +732,6 @@
                 ktaNameLbl: "Full Name",
                 ktaIdLbl: "Member ID",
                 ktaRoleLbl: "Role / Position",
-                ktaStatus: "Status: Active",
                 ktaStatusVal: "Active",
                 profileSettings: "Profile Settings & Security",
                 lblProfName: "Full Name",
@@ -722,10 +752,20 @@
                 linkTentang: "About Us",
                 footerContact: "Contact",
                 footerCopy: "Copyright © 2026 Tazkia Baitulmal. All rights reserved.",
-                successTitle: "Success!",
                 close: "Close",
                 roleAdmin: "Administrator",
-                roleRelawan: "Volunteer"
+                roleRelawan: "Volunteer",
+                msgSuccessTitle: "Success!",
+                msgSuccessText: "Successfully updated system data",
+                msgAddCitizen: "Successfully added citizen data",
+                msgDelCitizen: "Citizen data successfully deleted",
+                msgProfileUpdated: "Profile successfully updated.",
+                msgPhotoUpdated: "Profile photo successfully updated.",
+                msgAccountExists: "Account already exists! Please sign in.",
+                msgAccountSuccess: "Account successfully registered! Please sign in.",
+                msgLoginErrorTitle: "Sign In Failed",
+                msgLoginErrorText: "Incorrect credentials! Please sign up if you don't have an account.",
+                msgWarningTitle: "Warning"
             }
         };
 
@@ -809,9 +849,33 @@
             document.getElementById('txt-stat-3').innerText = t.stat3;
             document.getElementById('txt-admin-panel-title').innerText = t.adminPanelTitle;
             document.getElementById('txt-admin-panel-sub').innerText = t.adminPanelSub;
+            
+            const searchAdminEl = document.getElementById('search-admin');
+            if(searchAdminEl) searchAdminEl.placeholder = t.searchAdminPlaceholder;
+            
+            const optAdminAll = document.getElementById('opt-admin-filter-all');
+            if(optAdminAll) optAdminAll.innerText = t.optFilterAll;
+            const optAdminWait = document.getElementById('opt-admin-filter-wait');
+            if(optAdminWait) optAdminWait.innerText = t.optFilterWait;
+            const optAdminProc = document.getElementById('opt-admin-filter-proc');
+            if(optAdminProc) optAdminProc.innerText = t.optFilterProc;
+            const optAdminDone = document.getElementById('opt-admin-filter-done');
+            if(optAdminDone) optAdminDone.innerText = t.optFilterDone;
+
+            document.getElementById('th-admin-warga').innerText = t.thAdminWarga;
+            document.getElementById('th-admin-kontak').innerText = t.thAdminKontak;
+            document.getElementById('th-admin-jenis').innerText = t.thAdminJenis;
+            document.getElementById('th-admin-catatan').innerText = t.thAdminCatatan;
+            document.getElementById('th-admin-status').innerText = t.thAdminStatus;
+            document.getElementById('th-admin-aksi').innerText = t.thAdminAksi;
+
             document.getElementById('btn-export-csv').innerHTML = `<i class="fa-solid fa-file-excel"></i> <span>${t.exportCsv}</span>`;
 
             document.getElementById('txt-ubah-foto').innerText = t.ubahFoto;
+            document.getElementById('txt-span-kamera').innerText = t.spanKamera;
+            document.getElementById('txt-span-galeri').innerText = t.spanGaleri;
+            document.getElementById('txt-btn-batal').innerText = t.modalBatal;
+
             document.getElementById('txt-verified-badge').innerText = t.verifiedBadge;
             document.getElementById('txt-member-id-label').innerText = t.memberIdLabel;
             document.getElementById('txt-kta-title').innerText = t.ktaTitle;
@@ -884,22 +948,24 @@
 
             if(!name || !password) return;
 
+            const t = dict[currentLang];
+
             if (authMode === 'signup') {
                 const exist = registeredAccounts.find(acc => acc.name.toLowerCase() === name.toLowerCase() && acc.role === role);
                 if(exist) {
-                    showModal("Perhatian", currentLang === 'id' ? "Akun sudah terdaftar! Silakan masuk." : "Account already exists! Please sign in.");
+                    showModal(t.msgWarningTitle, t.msgAccountExists);
                     return;
                 }
                 registeredAccounts.push({ name, role, password, ttl: "-", emergency: "-", photo: "" });
                 localStorage.setItem('careops_accounts', JSON.stringify(registeredAccounts));
-                showModal("Berhasil!", currentLang === 'id' ? "Akun berhasil didaftarkan! Silakan masuk." : "Account successfully registered! Please sign in.");
+                showModal(t.msgSuccessTitle, t.msgAccountSuccess);
                 authMode = 'signin';
                 applyLanguage();
                 return;
             } else {
                 const found = registeredAccounts.find(acc => acc.name.toLowerCase() === name.toLowerCase() && acc.role === role && acc.password === password);
                 if (!found) {
-                    showModal("Gagal Masuk", currentLang === 'id' ? "Nama, peran, atau kata sandi salah! Daftarkan akun terlebih dahulu jika belum punya." : "Incorrect credentials! Please sign up if you don't have an account.");
+                    showModal(t.msgLoginErrorTitle, t.msgLoginErrorText);
                     return;
                 }
             }
@@ -1098,7 +1164,8 @@
                     localStorage.setItem('careops_accounts', JSON.stringify(registeredAccounts));
                 }
                 updateGlobalAvatar();
-                showModal("Berhasil!", currentLang === 'id' ? "Foto profil berhasil diganti." : "Profile photo successfully updated.");
+                const t = dict[currentLang];
+                showModal(t.msgSuccessTitle, t.msgPhotoUpdated);
             };
             reader.readAsDataURL(file);
             e.target.value = '';
@@ -1159,7 +1226,8 @@
             document.getElementById('sidebar-user-name').innerText = newName;
             
             renderProfileData();
-            showModal("Berhasil!", currentLang === 'id' ? "Profil berhasil diperbarui." : "Profile successfully updated.");
+            const t = dict[currentLang];
+            showModal(t.msgSuccessTitle, t.msgProfileUpdated);
         }
 
         function handleTambahPasien(e) {
@@ -1195,7 +1263,8 @@
 
             document.getElementById('form-pasien').reset();
             renderDashboard();
-            showModal("Berhasil!", currentLang === 'id' ? "Berhasil menambahkan data warga" : "Successfully added citizen data");
+            const t = dict[currentLang];
+            showModal(t.msgSuccessTitle, t.msgAddCitizen);
         }
 
         function hapusPasien(id) {
@@ -1203,7 +1272,8 @@
             saveDataToLocalStorage();
             updateBadgeCount();
             renderDashboard();
-            showModal("Berhasil", currentLang === 'id' ? "Data warga berhasil dihapus" : "Citizen data successfully deleted");
+            const t = dict[currentLang];
+            showModal(t.msgSuccessTitle, t.msgDelCitizen);
         }
 
         function updateStatusPasien(id, statusBaru) {
@@ -1353,7 +1423,7 @@
                                 <button onclick="hapusPasien(${p.id})" class="bg-rose-50 hover:bg-rose-100 text-rose-600 px-2 py-1.5 rounded-lg text-xs font-medium transition" title="Hapus"><i class="fa-solid fa-trash-can"></i></button>
                             </td>
                         </tr>
-                    `).join('') || `<tr><td colspan="6" class="text-center py-6 text-slate-400">${currentLang === 'id' ? 'Tidak ada permohonan.' : 'No requests found.'}</td></tr>`;
+                    `).join('') || `<tr><td colspan="6" class="text-center py-6 text-slate-400">${dict[currentLang].emptyRequest}</td></tr>`;
                 }
             }
         }
