@@ -446,7 +446,7 @@
                                         <div class="flex items-center justify-between pt-3 border-t border-white/10 text-[10px]">
                                             <div class="flex items-center space-x-1.5 text-slate-300">
                                                 <i class="fa-solid fa-shield-check text-orange-400"></i>
-                                                <span id="txt-kta-status">Status: <strong class="text-orange-400">Aktif</strong></span>
+                                                <span id="txt-kta-status">Status: <strong class="text-orange-400" id="txt-kta-status-val">Aktif</strong></span>
                                             </div>
                                             <div class="bg-white/10 px-2 py-1 rounded font-mono text-[9px] tracking-widest text-slate-300 border border-white/10">||||| | ||| || |||</div>
                                         </div>
@@ -477,7 +477,7 @@
                                             </div>
                                             <div>
                                                 <label id="lbl-prof-pass" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Kata Sandi Baru (Opsional)</label>
-                                                <input type="password" id="prof-input-password" placeholder="Kosongkan jika tidak diubah" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
+                                                <input type="password" id="prof-input-password" id="prof-input-pass-field" placeholder="Kosongkan jika tidak diubah" class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none">
                                             </div>
                                         </div>
                                         <div class="flex items-center justify-between pt-2">
@@ -506,23 +506,23 @@
                                 <span class="font-bold text-white text-base">Baitulmal Tazkia</span>
                             </div>
                             <p id="txt-footer-desc" class="text-slate-400 leading-relaxed text-[11px]">
-                                BAITULMAL TAZKIA merupakan salah satu lembaga zakat berbadan hukum yayasan yang menghimpun dan mengelola dana Zakat, Infaq, Shodaqoh, dan Wakaf dari masyarakat yang bertujuan untuk meningkatkan kualitas hidup kaum dhuafa/mustahik menuju ummat yang berdaya.
+                                BAITULMAL TAZKIA merupakan salah satu lembaga zakat berbadan hukum yayasan yang menghimpun dan mengelola dana Zakat,Infaq,Shodaqoh, dan Wakaf dari masyarakat yang bertujuan untuk meningkatkan kualitas hidup kaum dhuafa/mustahik menuju ummat yang berdaya.
                             </p>
                         </div>
                         <div class="md:col-span-2">
                             <h4 id="txt-footer-prog" class="font-bold text-white text-sm mb-4 tracking-wide">Program</h4>
                             <ul class="space-y-2 text-slate-400">
-                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> Zakat</a></li>
-                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> Donasi</a></li>
-                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> Wakaf</a></li>
-                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> Qurban</a></li>
+                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> <span id="txt-prog-zakat">Zakat</span></a></li>
+                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> <span id="txt-prog-donasi">Donasi</span></a></li>
+                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> <span id="txt-prog-wakaf">Wakaf</span></a></li>
+                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> <span id="txt-prog-qurban">Qurban</span></a></li>
                             </ul>
                         </div>
                         <div class="md:col-span-2">
                             <h4 id="txt-footer-link" class="font-bold text-white text-sm mb-4 tracking-wide">Tautan</h4>
                             <ul class="space-y-2 text-slate-400">
-                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> Laporan</a></li>
-                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> Tentang Kami</a></li>
+                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> <span id="txt-link-laporan">Laporan</span></a></li>
+                                <li><a href="#" class="hover:text-orange-400 transition flex items-center"><span class="w-1.5 h-1.5 bg-orange-500 rounded-full mr-2"></span> <span id="txt-link-tentang">Tentang Kami</span></a></li>
                             </ul>
                         </div>
                         <div class="space-y-3 md:col-span-4">
@@ -619,20 +619,30 @@
                 ktaIdLbl: "ID Anggota",
                 ktaRoleLbl: "Peran / Jabatan",
                 ktaStatus: "Status: Aktif",
+                ktaStatusVal: "Aktif",
                 profileSettings: "Pengaturan & Keamanan Profil",
                 lblProfName: "Nama Lengkap",
                 lblProfTtl: "Tempat, Tanggal Lahir",
                 lblProfEmergency: "Kontak Darurat Pribadi",
                 lblProfPass: "Kata Sandi Baru (Opsional)",
+                profPassPlaceholder: "Kosongkan jika tidak diubah",
                 notifLabel: "Terima Notifikasi Darurat via WhatsApp",
                 btnSaveProfile: "Simpan Perubahan",
                 footerDesc: "BAITULMAL TAZKIA merupakan salah satu lembaga zakat berbadan hukum yayasan yang menghimpun dan mengelola dana Zakat,Infaq,Shodaqoh, dan Wakaf dari masyarakat yang bertujuan untuk meningkatkan kualitas hidup kaum dhuafa/mustahik menuju ummat yang berdaya.",
                 footerProg: "Program",
+                progZakat: "Zakat",
+                progDonasi: "Donasi",
+                progWakaf: "Wakaf",
+                progQurban: "Qurban",
                 footerLink: "Tautan",
+                linkLaporan: "Laporan",
+                linkTentang: "Tentang Kami",
                 footerContact: "Kontak",
                 footerCopy: "Copyright © 2026 Tazkia Baitulmal. All rights reserved.",
                 successTitle: "Berhasil!",
-                close: "Tutup"
+                close: "Tutup",
+                roleAdmin: "Administrator",
+                roleRelawan: "Relawan"
             },
             en: {
                 loginSub: "Volunteer & Social Assistance Operational Portal",
@@ -692,20 +702,30 @@
                 ktaIdLbl: "Member ID",
                 ktaRoleLbl: "Role / Position",
                 ktaStatus: "Status: Active",
+                ktaStatusVal: "Active",
                 profileSettings: "Profile Settings & Security",
                 lblProfName: "Full Name",
                 lblProfTtl: "Place, Date of Birth",
                 lblProfEmergency: "Emergency Contact",
                 lblProfPass: "New Password (Optional)",
+                profPassPlaceholder: "Leave blank if unchanged",
                 notifLabel: "Receive Emergency Notifications via WhatsApp",
                 btnSaveProfile: "Save Changes",
-                footerDesc: "BAITULMAL TAZKIA merupakan salah satu lembaga zakat berbadan hukum yayasan yang menghimpun dan mengelola dana Zakat,Infaq,Shodaqoh, dan Wakaf dari masyarakat yang bertujuan untuk meningkatkan kualitas hidup kaum dhuafa/mustahik menuju ummat yang berdaya.",
+                footerDesc: "BAITULMAL TAZKIA is a legal zakat institution gathering and managing Zakat, Infaq, Shodaqoh, and Waqf funds from the public to improve the quality of life of mustahik towards an empowered ummah.",
                 footerProg: "Programs",
+                progZakat: "Zakat",
+                progDonasi: "Donation",
+                progWakaf: "Waqf",
+                progQurban: "Qurban",
                 footerLink: "Links",
+                linkLaporan: "Reports",
+                linkTentang: "About Us",
                 footerContact: "Contact",
                 footerCopy: "Copyright © 2026 Tazkia Baitulmal. All rights reserved.",
                 successTitle: "Success!",
-                close: "Close"
+                close: "Close",
+                roleAdmin: "Administrator",
+                roleRelawan: "Volunteer"
             }
         };
 
@@ -799,19 +819,37 @@
             document.getElementById('txt-kta-name-lbl').innerText = t.ktaNameLbl;
             document.getElementById('txt-kta-id-lbl').innerText = t.ktaIdLbl;
             document.getElementById('txt-kta-role-lbl').innerText = t.ktaRoleLbl;
-            document.getElementById('txt-kta-status').innerHTML = `${t.ktaStatus.split(':')[0]}: <strong class="text-orange-400">Aktif</strong>`;
+            
+            const ktaStatusEl = document.getElementById('txt-kta-status');
+            if(ktaStatusEl) {
+                const labelStatus = currentLang === 'id' ? 'Status' : 'Status';
+                ktaStatusEl.innerHTML = `${labelStatus}: <strong class="text-orange-400" id="txt-kta-status-val">${t.ktaStatusVal}</strong>`;
+            }
+
             document.getElementById('txt-profile-settings').innerHTML = `<i class="fa-solid fa-user-pen text-orange-600 mr-2"></i> ${t.profileSettings}`;
 
             document.getElementById('lbl-prof-name').innerText = t.lblProfName;
             document.getElementById('lbl-prof-ttl').innerText = t.lblProfTtl;
             document.getElementById('lbl-prof-emergency').innerText = t.lblProfEmergency;
             document.getElementById('lbl-prof-pass').innerText = t.lblProfPass;
+            
+            const passField = document.getElementById('prof-input-password');
+            if(passField) passField.placeholder = t.profPassPlaceholder;
+
             document.getElementById('txt-notif-label').innerText = t.notifLabel;
             document.getElementById('btn-save-profile').innerText = t.btnSaveProfile;
 
             document.getElementById('txt-footer-desc').innerText = t.footerDesc;
             document.getElementById('txt-footer-prog').innerText = t.footerProg;
+            document.getElementById('txt-prog-zakat').innerText = t.progZakat;
+            document.getElementById('txt-prog-donasi').innerText = t.progDonasi;
+            document.getElementById('txt-prog-wakaf').innerText = t.progWakaf;
+            document.getElementById('txt-prog-qurban').innerText = t.progQurban;
+
             document.getElementById('txt-footer-link').innerText = t.footerLink;
+            document.getElementById('txt-link-laporan').innerText = t.linkLaporan;
+            document.getElementById('txt-link-tentang').innerText = t.linkTentang;
+
             document.getElementById('txt-footer-contact').innerText = t.footerContact;
             document.getElementById('txt-footer-copy').innerText = t.footerCopy;
         }
@@ -898,13 +936,14 @@
                 renderSidebarMenu();
                 updateGlobalAvatar();
 
+                const t = dict[currentLang];
                 if (currentUser.role === 'admin') {
-                    badge.innerText = 'Administrator';
+                    badge.innerText = t.roleAdmin;
                     badge.className = 'text-[9px] px-2 py-0.5 rounded font-semibold bg-purple-500/20 text-purple-300';
                     document.getElementById('view-admin').classList.remove('hidden');
                     document.getElementById('view-relawan').classList.add('hidden');
                 } else {
-                    badge.innerText = currentLang === 'id' ? 'Relawan' : 'Volunteer';
+                    badge.innerText = t.roleRelawan;
                     badge.className = 'text-[9px] px-2 py-0.5 rounded font-semibold bg-orange-500/20 text-orange-300';
                     document.getElementById('view-relawan').classList.remove('hidden');
                     document.getElementById('view-admin').classList.add('hidden');
