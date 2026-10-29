@@ -113,7 +113,7 @@
                         <label id="lbl-role" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Pilih Peran (Role)</label>
                         <select id="auth-role" class="w-full px-4 py-2.5 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-white">
                             <option value="relawan" id="opt-relawan">Relawan Lapangan</option>
-                            <option value="admin" id="opt-admin">Administrator / Pengurus</option>
+                            <option value="admin" id="opt-admin">Administrator</option>
                         </select>
                     </div>
 
@@ -565,7 +565,7 @@
                 loginSub: "Portal Operasional Relawan & Bantuan Sosial",
                 roleLbl: "Pilih Peran (Role)",
                 optRelawan: "Relawan Lapangan",
-                optAdmin: "Administrator / Pengurus",
+                optAdmin: "Administrator",
                 nameLbl: "Nama Pengguna",
                 passLbl: "Kata Sandi (Password)",
                 btnSignin: "Masuk ke Sistem",
@@ -675,7 +675,7 @@
                 loginSub: "Volunteer & Social Assistance Operational Portal",
                 roleLbl: "Select Role",
                 optRelawan: "Field Volunteer",
-                optAdmin: "Administrator / Management",
+                optAdmin: "Administrator",
                 nameLbl: "Username",
                 passLbl: "Password",
                 btnSignin: "Sign In to System",
@@ -798,7 +798,7 @@
             const selectDash = document.getElementById('select-lang-dash');
             if(selectDash) selectDash.value = lang;
             
-            // Auto-convert existing stored patient statuses to match the active language schema seamlessly
+            // Auto-convert existing stored patient statuses & urgencies to match active language schema
             const tOld = lang === 'en' ? {w: 'Menunggu Verifikasi', p: 'Sedang Ditangani', s: 'Selesai'} : {w: 'Waiting', p: 'In Progress', s: 'Completed'};
             const tNew = lang === 'en' ? {w: 'Waiting', p: 'In Progress', s: 'Completed'} : {w: 'Menunggu Verifikasi', p: 'Sedang Ditangani', s: 'Selesai'};
             
@@ -806,6 +806,17 @@
                 if (p.status === tOld.w || p.status === 'Waiting' || p.status === 'Menunggu Verifikasi') p.status = tNew.w;
                 else if (p.status === tOld.p || p.status === 'In Progress' || p.status === 'Sedang Ditangani') p.status = tNew.p;
                 else if (p.status === tOld.s || p.status === 'Completed' || p.status === 'Selesai') p.status = tNew.s;
+
+                // Urgency translation mapping
+                if (lang === 'en') {
+                    if (p.urgensi === 'Tinggi (Darurat)') p.urgensi = 'High (Urgent)';
+                    else if (p.urgensi === 'Sedang') p.urgensi = 'Medium';
+                    else if (p.urgensi === 'Normal / Rutin') p.urgensi = 'Normal / Routine';
+                } else {
+                    if (p.urgensi === 'High (Urgent)') p.urgensi = 'Tinggi (Darurat)';
+                    else if (p.urgensi === 'Medium') p.urgensi = 'Sedang';
+                    else if (p.urgensi === 'Normal / Routine') p.urgensi = 'Normal / Rutin';
+                }
             });
             saveDataToLocalStorage();
 
@@ -1147,7 +1158,7 @@
             const acc = registeredAccounts.find(a => a.name.toLowerCase() === currentUser.name.toLowerCase() && a.role === currentUser.role) || { ttl: '', emergency: '', photo: '' };
             
             document.getElementById('profile-display-name').innerText = currentUser.name;
-            document.getElementById('profile-display-role').innerText = currentUser.role === 'admin' ? (currentLang === 'id' ? 'Administrator Utama' : 'Chief Administrator') : (currentLang === 'id' ? 'Relawan Lapangan' : 'Field Volunteer');
+            document.getElementById('profile-display-role').innerText = currentUser.role === 'admin' ? (currentLang === 'id' ? 'Administrator' : 'Administrator') : (currentLang === 'id' ? 'Relawan Lapangan' : 'Field Volunteer');
             
             document.getElementById('kta-name').innerText = currentUser.name;
             document.getElementById('kta-role').innerText = currentUser.role === 'admin' ? (currentLang === 'id' ? 'Administrator' : 'Administrator') : (currentLang === 'id' ? 'Relawan' : 'Volunteer');
@@ -1264,12 +1275,21 @@
             const usia = document.getElementById('p-usia').value.trim();
             const telp = document.getElementById('p-telp').value.trim();
             const jenis = document.getElementById('p-jenis').value.trim();
-            const urgensi = document.getElementById('p-urgensi').value;
+            const urgensiVal = document.getElementById('p-urgensi').value;
             const alamat = document.getElementById('p-alamat').value.trim();
             const keluhan = document.getElementById('p-keluhan').value.trim();
 
             const t = dict[currentLang];
             const roleText = currentUser.role === 'admin' ? t.roleAdmin : t.roleRelawan;
+            
+            // Map selected form urgency value to English directly if active language is 'en'
+            let finalUrgency = urgensiVal;
+            if (currentLang === 'en') {
+                if (urgensiVal.includes('Tinggi')) finalUrgency = 'High (Urgent)';
+                else if (urgensiVal.includes('Sedang')) finalUrgency = 'Medium';
+                else finalUrgency = 'Normal / Routine';
+            }
+
             const pasienBaru = {
                 id: Date.now(),
                 nama,
@@ -1277,7 +1297,7 @@
                 usia,
                 telp,
                 jenis,
-                urgensi,
+                urgensi: finalUrgency,
                 alamat,
                 keluhan,
                 status: t.statusWait,
@@ -1324,7 +1344,6 @@
             const p = listPasien.find(item => item.id === id);
             if(!p) return;
 
-            const t = dict[currentLang];
             const content = `
                 <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-xl mb-3">
                     <div><span class="text-xs text-slate-400 block">${currentLang === 'id' ? 'Nama Warga' : 'Citizen Name'}</span><strong>${p.nama} (${p.usia} thn)</strong></div>
