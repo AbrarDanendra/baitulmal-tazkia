@@ -600,6 +600,12 @@
                 optFilterWait: "Menunggu Verifikasi",
                 optFilterProc: "Sedang Ditangani",
                 optFilterDone: "Selesai",
+                statusWait: "Menunggu Verifikasi",
+                statusProc: "Sedang Ditangani",
+                statusDone: "Selesai",
+                selectWait: "Menunggu",
+                selectProc: "Proses",
+                selectDone: "Selesai",
                 thWarga: "Warga / Pasien",
                 thBantuan: "Jenis Bantuan",
                 thStatus: "Status",
@@ -652,6 +658,7 @@
                 close: "Tutup",
                 roleAdmin: "Administrator",
                 roleRelawan: "Relawan",
+                recorderPrefix: "Pencatat",
                 msgSuccessTitle: "Berhasil!",
                 msgSuccessText: "Berhasil memperbarui data sistem",
                 msgAddCitizen: "Berhasil menambahkan data warga",
@@ -703,6 +710,12 @@
                 optFilterWait: "Waiting for Verification",
                 optFilterProc: "In Progress",
                 optFilterDone: "Completed",
+                statusWait: "Waiting for Verification",
+                statusProc: "In Progress",
+                statusDone: "Completed",
+                selectWait: "Waiting",
+                selectProc: "In Progress",
+                selectDone: "Completed",
                 thWarga: "Citizen / Patient",
                 thBantuan: "Assistance Type",
                 thStatus: "Status",
@@ -755,6 +768,7 @@
                 close: "Close",
                 roleAdmin: "Administrator",
                 roleRelawan: "Volunteer",
+                recorderPrefix: "Recorded by",
                 msgSuccessTitle: "Success!",
                 msgSuccessText: "Successfully updated system data",
                 msgAddCitizen: "Successfully added citizen data",
@@ -1242,6 +1256,7 @@
             const alamat = document.getElementById('p-alamat').value.trim();
             const keluhan = document.getElementById('p-keluhan').value.trim();
 
+            const t = dict[currentLang];
             const pasienBaru = {
                 id: Date.now(),
                 nama,
@@ -1252,7 +1267,7 @@
                 urgensi,
                 alamat,
                 keluhan,
-                status: "Menunggu Verifikasi",
+                status: t.statusWait,
                 relawan: `${currentUser.name} (${currentUser.role})`,
                 catatan: "-"
             };
@@ -1263,7 +1278,6 @@
 
             document.getElementById('form-pasien').reset();
             renderDashboard();
-            const t = dict[currentLang];
             showModal(t.msgSuccessTitle, t.msgAddCitizen);
         }
 
@@ -1297,6 +1311,7 @@
             const p = listPasien.find(item => item.id === id);
             if(!p) return;
 
+            const t = dict[currentLang];
             const content = `
                 <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-xl mb-3">
                     <div><span class="text-xs text-slate-400 block">${currentLang === 'id' ? 'Nama Warga' : 'Citizen Name'}</span><strong>${p.nama} (${p.usia} thn)</strong></div>
@@ -1348,6 +1363,7 @@
                 return matchSearch && matchFilter;
             });
 
+            const t = dict[currentLang];
             const tbodyRelawan = document.getElementById('tabel-pasien-relawan');
             if(tbodyRelawan) {
                 tbodyRelawan.innerHTML = filteredRelawan.map(p => `
@@ -1368,13 +1384,13 @@
                             <button onclick="hapusPasien(${p.id})" class="bg-rose-50 hover:bg-rose-100 text-rose-600 px-2.5 py-1.5 rounded-lg text-xs font-medium transition" title="Hapus"><i class="fa-solid fa-trash-can"></i></button>
                         </td>
                     </tr>
-                `).join('') || `<tr><td colspan="4" class="text-center py-6 text-slate-400">${dict[currentLang].emptyCitizen}</td></tr>`;
+                `).join('') || `<tr><td colspan="4" class="text-center py-6 text-slate-400">${t.emptyCitizen}</td></tr>`;
             }
 
             if (currentUser && currentUser.role === 'admin') {
                 const total = listPasien.length;
-                const proses = listPasien.filter(p => p.status === 'Sedang Ditangani' || p.status === 'Menunggu Verifikasi').length;
-                const selesai = listPasien.filter(p => p.status === 'Selesai').length;
+                const proses = listPasien.filter(p => p.status === t.statusProc || p.status === t.statusWait).length;
+                const selesai = listPasien.filter(p => p.status === t.statusDone).length;
 
                 document.getElementById('stat-total').innerText = total;
                 document.getElementById('stat-proses').innerText = proses;
@@ -1397,7 +1413,7 @@
                         <tr class="hover:bg-slate-50">
                             <td class="py-3 px-3 font-medium text-slate-800">
                                 ${p.nama} <span class="text-xs text-slate-500 font-normal">(${p.usia} thn)</span>
-                                <div class="text-xs text-slate-400">Pencatat: ${p.relawan}</div>
+                                <div class="text-xs text-slate-400">${t.recorderPrefix}: ${p.relawan}</div>
                             </td>
                             <td class="py-3 px-3 text-slate-600 text-xs">
                                 <div><i class="fa-solid fa-phone mr-1"></i>${p.telp}</div>
@@ -1416,14 +1432,14 @@
                             <td class="py-3 px-3 text-center space-x-1 whitespace-nowrap">
                                 <button onclick="showDetail(${p.id})" class="bg-blue-50 hover:bg-blue-100 text-blue-600 px-2 py-1.5 rounded-lg text-xs font-medium transition" title="Detail"><i class="fa-solid fa-eye"></i></button>
                                 <select onchange="updateStatusPasien(${p.id}, this.value)" class="text-xs px-2 py-1.5 rounded border border-slate-300 bg-white font-medium focus:outline-none focus:ring-1 focus:ring-orange-500">
-                                    <option value="Menunggu Verifikasi" ${p.status === 'Menunggu Verifikasi' ? 'selected' : ''}>Menunggu</option>
-                                    <option value="Sedang Ditangani" ${p.status === 'Sedang Ditangani' ? 'selected' : ''}>Proses</option>
-                                    <option value="Selesai" ${p.status === 'Selesai' ? 'selected' : ''}>Selesai</option>
+                                    <option value="${t.statusWait}" ${p.status === t.statusWait ? 'selected' : ''}>${t.selectWait}</option>
+                                    <option value="${t.statusProc}" ${p.status === t.statusProc ? 'selected' : ''}>${t.selectProc}</option>
+                                    <option value="${t.statusDone}" ${p.status === t.statusDone ? 'selected' : ''}>${t.selectDone}</option>
                                 </select>
                                 <button onclick="hapusPasien(${p.id})" class="bg-rose-50 hover:bg-rose-100 text-rose-600 px-2 py-1.5 rounded-lg text-xs font-medium transition" title="Hapus"><i class="fa-solid fa-trash-can"></i></button>
                             </td>
                         </tr>
-                    `).join('') || `<tr><td colspan="6" class="text-center py-6 text-slate-400">${dict[currentLang].emptyRequest}</td></tr>`;
+                    `).join('') || `<tr><td colspan="6" class="text-center py-6 text-slate-400">${t.emptyRequest}</td></tr>`;
                 }
             }
         }
@@ -1440,12 +1456,11 @@
         }
 
         function getStatusBadgeClass(status) {
-            switch(status) {
-                case 'Menunggu Verifikasi': return 'bg-amber-100 text-amber-800';
-                case 'Sedang Ditangani': return 'bg-blue-100 text-blue-800';
-                case 'Selesai': return 'bg-orange-100 text-orange-800';
-                default: return 'bg-slate-100 text-slate-800';
-            }
+            const t = dict[currentLang];
+            if (status === t.statusWait) return 'bg-amber-100 text-amber-800';
+            if (status === t.statusProc) return 'bg-blue-100 text-blue-800';
+            if (status === t.statusDone) return 'bg-orange-100 text-orange-800';
+            return 'bg-slate-100 text-slate-800';
         }
 
         function getUrgencyBadgeClass(urgensi) {
