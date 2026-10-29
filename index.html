@@ -348,9 +348,10 @@
                                             <option value="Sedang Ditangani" id="opt-admin-filter-proc">Sedang Ditangani</option>
                                             <option value="Selesai" id="opt-admin-filter-done">Selesai</option>
                                         </select>
-                                        <button onclick="exportToCSV()" id="btn-export-csv" class="bg-orange-50 hover:bg-orange-100 text-orange-800 px-3 py-2 rounded-lg text-xs font-medium transition flex items-center space-x-1">
+                                        <!-- Tombol Export CSV aman dengan href="javascript:void(0)" -->
+                                        <a href="javascript:void(0)" onclick="exportToCSV()" id="btn-export-csv" class="bg-orange-50 hover:bg-orange-100 text-orange-800 px-3 py-2 rounded-lg text-xs font-medium transition inline-flex items-center space-x-1 cursor-pointer">
                                             <i class="fa-solid fa-file-excel"></i> <span>Ekspor CSV</span>
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
 
@@ -798,7 +799,6 @@
             const selectDash = document.getElementById('select-lang-dash');
             if(selectDash) selectDash.value = lang;
             
-            // Auto-convert existing stored patient statuses & urgencies to match active language schema
             const tOld = lang === 'en' ? {w: 'Menunggu Verifikasi', p: 'Sedang Ditangani', s: 'Selesai'} : {w: 'Waiting', p: 'In Progress', s: 'Completed'};
             const tNew = lang === 'en' ? {w: 'Waiting', p: 'In Progress', s: 'Completed'} : {w: 'Menunggu Verifikasi', p: 'Sedang Ditangani', s: 'Selesai'};
             
@@ -807,7 +807,6 @@
                 else if (p.status === tOld.p || p.status === 'In Progress' || p.status === 'Sedang Ditangani') p.status = tNew.p;
                 else if (p.status === tOld.s || p.status === 'Completed' || p.status === 'Selesai') p.status = tNew.s;
 
-                // Urgency translation mapping
                 if (lang === 'en') {
                     if (p.urgensi === 'Tinggi (Darurat)') p.urgensi = 'High (Urgent)';
                     else if (p.urgensi === 'Sedang') p.urgensi = 'Medium';
@@ -1282,7 +1281,6 @@
             const t = dict[currentLang];
             const roleText = currentUser.role === 'admin' ? t.roleAdmin : t.roleRelawan;
             
-            // Map selected form urgency value to English directly if active language is 'en'
             let finalUrgency = urgensiVal;
             if (currentLang === 'en') {
                 if (urgensiVal.includes('Tinggi')) finalUrgency = 'High (Urgent)';
