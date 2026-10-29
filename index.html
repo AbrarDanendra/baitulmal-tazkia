@@ -707,10 +707,10 @@
                 searchPlaceholder: "Search name...",
                 searchAdminPlaceholder: "Search...",
                 optFilterAll: "All Status",
-                optFilterWait: "Waiting for Verification",
+                optFilterWait: "Waiting",
                 optFilterProc: "In Progress",
                 optFilterDone: "Completed",
-                statusWait: "Waiting for Verification",
+                statusWait: "Waiting",
                 statusProc: "In Progress",
                 statusDone: "Completed",
                 selectWait: "Waiting",
@@ -797,6 +797,18 @@
             document.getElementById('select-lang').value = lang;
             const selectDash = document.getElementById('select-lang-dash');
             if(selectDash) selectDash.value = lang;
+            
+            // Auto-convert existing stored patient statuses to match the active language schema seamlessly
+            const tOld = lang === 'en' ? {w: 'Menunggu Verifikasi', p: 'Sedang Ditangani', s: 'Selesai'} : {w: 'Waiting', p: 'In Progress', s: 'Completed'};
+            const tNew = lang === 'en' ? {w: 'Waiting', p: 'In Progress', s: 'Completed'} : {w: 'Menunggu Verifikasi', p: 'Sedang Ditangani', s: 'Selesai'};
+            
+            listPasien.forEach(p => {
+                if (p.status === tOld.w || p.status === 'Waiting' || p.status === 'Menunggu Verifikasi') p.status = tNew.w;
+                else if (p.status === tOld.p || p.status === 'In Progress' || p.status === 'Sedang Ditangani') p.status = tNew.p;
+                else if (p.status === tOld.s || p.status === 'Completed' || p.status === 'Selesai') p.status = tNew.s;
+            });
+            saveDataToLocalStorage();
+
             applyLanguage();
             if(currentUser) {
                 renderSidebarMenu();
@@ -850,9 +862,9 @@
             document.getElementById('txt-list-warga-title').innerText = t.listWargaTitle;
             document.getElementById('search-relawan').placeholder = t.searchPlaceholder;
             document.getElementById('opt-filter-all').innerText = t.optFilterAll;
-            document.getElementById('opt-filter-wait').innerText = t.optFilterWait;
-            document.getElementById('opt-filter-proc').innerText = t.optFilterProc;
-            document.getElementById('opt-filter-done').innerText = t.optFilterDone;
+            document.getElementById('opt-filter-wait').innerText = t.statusWait;
+            document.getElementById('opt-filter-proc').innerText = t.statusProc;
+            document.getElementById('opt-filter-done').innerText = t.statusDone;
             document.getElementById('th-warga').innerText = t.thWarga;
             document.getElementById('th-bantuan').innerText = t.thBantuan;
             document.getElementById('th-status').innerText = t.thStatus;
@@ -870,11 +882,11 @@
             const optAdminAll = document.getElementById('opt-admin-filter-all');
             if(optAdminAll) optAdminAll.innerText = t.optFilterAll;
             const optAdminWait = document.getElementById('opt-admin-filter-wait');
-            if(optAdminWait) optAdminWait.innerText = t.optFilterWait;
+            if(optAdminWait) optAdminWait.innerText = t.statusWait;
             const optAdminProc = document.getElementById('opt-admin-filter-proc');
-            if(optAdminProc) optAdminProc.innerText = t.optFilterProc;
+            if(optAdminProc) optAdminProc.innerText = t.statusProc;
             const optAdminDone = document.getElementById('opt-admin-filter-done');
-            if(optAdminDone) optAdminDone.innerText = t.optFilterDone;
+            if(optAdminDone) optAdminDone.innerText = t.statusDone;
 
             document.getElementById('th-admin-warga').innerText = t.thAdminWarga;
             document.getElementById('th-admin-kontak').innerText = t.thAdminKontak;
@@ -1257,6 +1269,7 @@
             const keluhan = document.getElementById('p-keluhan').value.trim();
 
             const t = dict[currentLang];
+            const roleText = currentUser.role === 'admin' ? t.roleAdmin : t.roleRelawan;
             const pasienBaru = {
                 id: Date.now(),
                 nama,
@@ -1268,7 +1281,7 @@
                 alamat,
                 keluhan,
                 status: t.statusWait,
-                relawan: `${currentUser.name} (${currentUser.role})`,
+                relawan: `${currentUser.name} (${roleText})`,
                 catatan: "-"
             };
 
